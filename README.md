@@ -30,25 +30,25 @@ When site visitors click on a map marker, a pop-up appears with facts about that
     Paul.js
 
 #### major things left to do
-``1. import 
+import 
         Flask--SQLite db--NPSplacesAndAttendance table
         Flask--SQLite db--POIdata table
 
-1. systemwide map
+systemwide map
         pickRandomPlace.js
         drawMap.js
         bindPlaceMarkers.js
         drawCircles.js
         bindPOImarkers.js
 
-1. per-park attendance
+per-park attendance
         plotAttendance.js
  
-1. systemwide scatterplot
+systemwide scatterplot
         Lat vs Area
         Long vs Area
 
-1. make sure HTML and CSS are making the page look really sharp``
+make sure HTML and CSS are making the page look really sharp
 
 Benji advises: Don't put logic on the outermost level of any of these files.
 Everything we do, put it into a function.
