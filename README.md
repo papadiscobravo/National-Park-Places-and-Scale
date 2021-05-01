@@ -8,7 +8,8 @@
 
 
 #### summary
-Lorem ipsum delorum est... 
+This one-page dashboard shows a map of places in the U.S. National Park System.
+When site visitors click on a map marker, a pop-up appears with facts about that place, a graph is drawn of that park's 2011-2020 attendance, and concentric circles appear around the marker. Clicking on a different place and plotting the same diameter circles around a new place while staying at the same zoom level allows visitors to compare the scale of different places.
 
 
 #### DRAFT site diagram
