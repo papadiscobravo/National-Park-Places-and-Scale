@@ -24,18 +24,32 @@ When site visitors click on a map marker, a pop-up appears with facts about that
     app.js
 
     app.js calls on:
-    D3import1.js--Flask--SQLite db--NPSplaces table
-    D3import2.js--Flask--SQLite db--POIdata table
-    D3import3.js--Flask--SQLite db--AttendanceData table
-    pickRandomPlace.js
-    drawMap.js
-    bindPlaceMarkers.js
-    drawCircles.js
-    bindPOImarkers.js
-    plotAttendance.js
-    plotLatVsArea.js
-    plotLongVsArea.js
+    Matt.js
+    Ciera.js
+    Emerson.js
+    Paul.js
 
+#### major things left to do
+1. import 
+        D3import1.js--Flask--SQLite db--NPSplacesAndAttendance table
+        D3import2.js--Flask--SQLite db--POIdata table
+
+1. systemwide map
+        pickRandomPlace.js
+        drawMap.js
+        bindPlaceMarkers.js
+        drawCircles.js
+        bindPOImarkers.js
+
+1. per-park attendance
+        plotAttendance.js
+ 
+1. systemwide scatterplot
+        Lat vs Area
+        Long vs Area
+
+Don't put logic on the outermost level of any of these files.
+Everything we do, put it into a function.
 
 #### instructions
 1. Clone this repo.
