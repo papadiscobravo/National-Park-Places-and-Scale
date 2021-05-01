@@ -1,0 +1,32 @@
+[
+    {
+        "code": "malu",
+        "name": "Martin Luther King Jr National Historic Site",
+        "city": "Atlanta",
+        "state": "Georgia",
+        "lat": 33.7555614,
+        "long": -84.3734823,
+        "extent": {}
+    },
+
+    {
+        "code": "afbg",
+        "name": "African Burial Ground National Monument",
+        "city": "New York",
+        "state": "NY",
+        "lat": 40.7150514,
+        "long": -74.0053687,
+        "extent": {}
+    },
+
+    {
+        "code": "aleu",
+        "name": "Aleutian World War II National Historic Area",
+        "city": "Unalaska",
+        "state": "AL",
+        "lat": 53.8845397,
+        "long": -166.5533823,
+        "extent": {}
+    }
+    
+]
