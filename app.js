@@ -14,7 +14,7 @@ var NPSData = {};
 
 d3.csv("national_park_system.csv").then(function(NPSData) {
     // look at NPSData
-    console.log("Here's National Park System data:");
+    console.log(`The National Park System dataset is ${NPSData.length} records long:`);
     console.log(NPSData);
   
     // Cast strings to numbers for each record in NPSData
@@ -36,7 +36,7 @@ var POIData = "";
 d3.csv("points_of_interest.csv").then(function(POIData) {
   
     // look at POIData
-    console.log("Here's points-of-interest data:");
+    console.log(`The points-of-interest dataset is ${POIData.length} records long:`);
     console.log(POIData);
 
     // Cast strings to numbers for each record in NPSData
@@ -68,7 +68,7 @@ var attendanceData = [];
 d3.csv("attendance.csv").then(function(attendanceData) {
   
     // look at attendanceData
-    console.log("Here's attendance data:");
+    console.log(`The attendance dataset is ${attendanceData.length} records long:`);
     console.log(attendanceData);
 
     // Cast strings to numbers for each record in NPSData
