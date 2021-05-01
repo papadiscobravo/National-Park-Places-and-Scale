@@ -30,15 +30,15 @@ When site visitors click on a map marker, a pop-up appears with facts about that
     Paul.js
 
 #### major things left to do
-1. Import data from SQLite via Flask: NPSplacesAndAttendance and POIdata tables
+1. Import data from SQLite via Flask: NPSplacesAndAttendance table and POIdata table.
 
-1. Plot systemwide map: pick a random place, draw the map centered on that place, bind place markers of 423 units (parks) to the map, draw concentric circles aroud the place the map is centered on, bind point-of-interest markers to the map
+1. Plot systemwide map: pick a random place, draw the map centered on that place, bind place markers of 423 units (parks) to the map, draw concentric circles aroud the place the map is centered on, bind point-of-interest markers to the map.
 
-1. Plot per-park attendance that updates for each unit (park) clicked on
+1. Plot per-park attendance that updates for each unit (park) clicked on.
  
 1. Plot two scatterplots of system-wide data that remain unchanged onscreen: lat vs area and long vs area.
 
-1. Make sure HTML and CSS are making the page look really sharp
+1. Make sure HTML and CSS are making the page look really sharp.
 
 1. Benji advises: Don't put logic on the outermost level of any of these files.
 Everything we do, put it into a function.
