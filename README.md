@@ -13,16 +13,16 @@ Lorem ipsum delorum est...
 
 #### DRAFT site diagram
 
-index.html imports:
-style.css
-Leaflet
-d3
+    index.html imports:
+    style.css
+    Leaflet
+    d3
 
-index.html calls on
-config.js, which calls on mapbox.com
-app.js
+    index.html calls on:
+    config.js, which calls on mapbox.com
+    app.js
 
-    app.js calls on
+    app.js calls on:
     D3import1.js--Flask--SQLite db--NPSplaces table
     D3import2.js--Flask--SQLite db--POIdata table
     D3import3.js--Flask--SQLite db--AttendanceData table
