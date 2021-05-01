@@ -13,15 +13,23 @@ var NPSData = {};
     // extent
 
 d3.csv("national_park_system.csv").then(function(NPSData) {
-    // look at NPSData
-    console.log(`The National Park System dataset is ${NPSData.length} records long:`);
-    console.log(NPSData);
-  
     // Cast strings to numbers for each record in NPSData
     NPSData.forEach(function(data) {
-      data.lat = +data.lat;
-      data.long = +data.long;
-    });
+        data.lat = +data.lat;
+        data.long = +data.long;
+      });
+
+      // set a variable that stores how many records there are in this set:
+    NPSPlaceCount = NPSData.length;
+    NPSPlaceRandom = Math.floor(Math.random() * NPSPlaceCount);
+ 
+    // look at NPSData
+    console.log(`The National Park System (NPS) dataset is ${NPSPlaceCount} records long:`);
+    console.log(NPSData);
+
+    var NPSPlaceRandomLatLong = `[${NPSData[NPSPlaceRandom].lat}, ${NPSData[NPSPlaceRandom].long}]`;
+    console.log(`An NPS place at random is ${NPSData[NPSPlaceRandom].name} at ${NPSPlaceRandomLatLong}.`);
+
 });
 
 
@@ -87,3 +95,5 @@ d3.csv("attendance.csv").then(function(attendanceData) {
     });
 });
 
+console.log("If the next line is an error message, it demonstrates I can't get at a variable declared inside a D3 function from outside D3, which suggests either doing everything inside D3 functions or finding a different way to import .CSVs into JavaScript.");
+console.log(NPSPlaceRandomLatLong);
