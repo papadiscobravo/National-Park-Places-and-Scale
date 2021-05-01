@@ -13,6 +13,8 @@ var NPSData = {};
     // long
     // extent
 
+    var NPSplaceRandomLatLong;
+
 d3.csv("national_park_system.csv").then(function(NPSData) {
     // Cast strings to numbers for each record in NPSData
     NPSData.forEach(function(data) {
@@ -28,7 +30,7 @@ d3.csv("national_park_system.csv").then(function(NPSData) {
     console.log(`The National Park System (NPS) dataset (from .CSV) is ${NPSplaceCount} records long:`);
     console.log(NPSData);
 
-    var NPSplaceRandomLatLong = `[${NPSData[NPSplaceRandom].lat}, ${NPSData[NPSplaceRandom].long}]`;
+    NPSplaceRandomLatLong = `[${NPSData[NPSplaceRandom].lat}, ${NPSData[NPSplaceRandom].long}]`;
     console.log(`An NPS place at random from imported .CSV is ${NPSData[NPSplaceRandom].name} at ${NPSplaceRandomLatLong}.`);
 
 });
@@ -213,61 +215,66 @@ console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
 
 // III. DRAW CONCENTRIC CIRCLES
-// For now, this picks a number at random, although we said we'll let visitors change this for themselves:
+    // A. HOW BIG?
+    // The idea is to let website visitors pick the size of concentric circles around a place on the map.
 
-// var miles = 300;
-var miles = Math.random() * 10 + .5;
-miles = Math.round((miles * 10)) / 10;
-diameter = miles * 2;
-// I just realized the radius of a circle is a bit abstract, but diameter is more concrete.
-// We might as well let people work directly with diameter, which will take a bit of rethinking.
+    // People get how wide a circle is, so that's what we should let them choose.
+    // (This does so at random, for the moment.)
+    // ******
+    var diameter = Math.random() * 10 + .5;
+    console.log(`The circle is set to have a ${diameter}-mile diameter on the previous line of code.`);
+    // ******
+
+    // Radius is not so relatable, but it's how JS and Leaflet do the math.
+    // Here I'm calling it miles.
+miles = diameter / 2;
+miles = Math.round((diameter * 10)) / 10;
+
+    // Tell the visitor how big the outer circle is--for now, console.log:
+console.log(`${diameter} miles is (${Math.round(diameter * 5280)} feet). Let's put that another way:`);
 
 
-// State for the visitor how big the outer circle is.
-console.log(`The largest circle is ${diameter} miles (${Math.round(diameter * 5280)} feet) across. Let's put that another way.`);
+    // B. HOW MANY DELAWARES IS THAT?
+    // All of this evaluates diameter against common dimensions,
+    // from smallest (the height of a person) to largest (the length of Delaware)
+    // and picks the best one.
 
-// Evaluate that diameter against common dimensions, from smallest (the height of a person)
-// to largest (the length of Delaware) and pick the best one.
-// Let' say we if it would take more than 100 of something, move to the next largest thing:
+    // If there are more than 100 of something, use a larger dimension.
+    // This sets that threshold of 100 in a way we can change if needed.
 var maxCommonObjects = 100;
 
-// Here begins a switch statement that does that:
+    // Here's the switch statement that does the evaluation based on that threshold
+    // and the real-world dimensions of some common objects:
 
 switch (diameter / 96 < maxCommonObjects) {
 
   case diameter * 5280 / 5.5 < maxCommonObjects:
 // 5.5 ft
-// The average height of a person in the U.S. is: female: 5'4", male: 5'9". (Source: N-HANES III.)
-console.log(`A person's about 5' 6" tall. If people laid down head to toe, the largest circle would be ${Math.round((miles * 2 * 5280 / 5.5) * 10) / 10} people across.`);
+console.log(`A person in the U.S. is about 5' 6" tall on average. If people laid down head to toe, the largest circle would be ${Math.round((miles * 2 * 5280 / 5.5) * 10) / 10} people across.`);
   break;
   
   case diameter * 5280 / 35 < maxCommonObjects:
 // 35 ft
-// A full-sized school bus is 35 feet long (or longer).
 console.log(`Many full-sized school buses are about 35 feet long. The largest circle would be ${Math.round((miles * 2 * 5280 / 35) * 10) / 10} such school buses across.`);
   break;
         
   case diameter * 5280 / 231.3 < maxCommonObjects:
 // 231.3 ft
-// A 747 is 231.3 feet long.
 console.log(`A 747 jet airliner is 231.3 feet long. The largest circle would be ${Math.round((miles * 2 * 5280 / 231.3) * 10) / 10} 747s across.`);
   break;
         
   case diameter * 5280 / 1063 < maxCommonObjects:
 // 1063 ft
-// The Eiffel Tower is currently 1063 feet tall.
 console.log(`The Eiffel Tower is currently 1063 feet tall. If you could lay it on its side, the largest circle would be ${Math.round((miles * 2 * 5280 / 1063) * 10) / 10} Eiffel Towers across.`);
   break;
         
   case diameter / 13.4 < maxCommonObjects:
 // 13.4 miles
-// Manhattan is about 13.4 miles long.
 console.log(`The island of Manhattan's about 13.4 miles from top to bottom. The largest circle would be ${Math.round((miles * 2 / 13.4) * 10) / 10} Manhattans across.`);
   break;
 
   case diameter / 13.4 >= maxCommonObjects:
 // 96 miles
-// Delaware is 96 miles long.
 console.log(`Delaware is 96 miles long. The largest circle would be ${Math.round((miles * 2 / 96) * 10) / 10} Delawares long.`);
   break;
   };
@@ -275,15 +282,16 @@ console.log(`Delaware is 96 miles long. The largest circle would be ${Math.round
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
 
-// We said we'd give visitors a second variable to change (probably with a drop-down): divisions.
-// How many divisions would the visitor like to see the largest circle divided into?
-// ******
+    // HOW MANY CONCENTRIC CIRCLES INSIDE THAT?
+    // We said we'd give visitors variable to change (probably with a drop-down)
+    // that specifies how many concentric circles there should be.
+    // (Just for the moment, it's choosing a value at random.)
 
-// var divisions = 10
+    // ******
+    // var divisions = 4
 var divisions = Math.round(Math.random() * 20)
-console.log(`The outer circle has ${divisions} divisions.`);
-
-// ******
+console.log(`The circle is set to have ${divisions} divisions on the previous line of code.`);
+    // ******
 
 // Radius starts at zero, but, when code gets to the loop that makes concentric circles,
 // radius will iterate by radiusIncrements up to the limit set in miles.
