@@ -472,8 +472,9 @@ console.log("-_-_-_-_-_-_-_-_-_-_-_-");
     // console.log(unit.Code);
     // console.log(unit.Latitude);
     // console.log(unit.Longitude);
+    unitSearchName = unit.Name.replace(/ /g, '+');
     L.marker([unit.Latitude, unit.Longitude])
-      .bindPopup("<h2>" + unit.Name + "</h2><h3>" + Math.round((unit.Acres) * 10) / 10 + " acres<br>" + unit.att_Average + " visitors per year (2011-2020 avg)</h3>")
+      .bindPopup("<h2><a href=http://www.google.com/search?q=" + unitSearchName + " target=_blank>" + unit.Name + "</a></h2><h3>" + Math.round((unit.Acres) * 10) / 10 + " acres<br>" + unit.att_Average + " visitors per year (2011-2020 avg)</h3>")
       .addTo(myMap);
     // console.log(`marked ${i+1}`);
   };
