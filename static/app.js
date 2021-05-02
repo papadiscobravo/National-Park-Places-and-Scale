@@ -1,115 +1,97 @@
-console.log("loaded");
+console.log("app.js loaded");
 
 // I. IMPORT SOME DATA
-// Is the only way to import data from a .CSV to do so within D3?
+
+  // A. import data about the 427 or so units (parks) in the NationalPark System.
 
 var NPSData = {};
-// national_park_system.csv
-// code
-// name
-// city
-// state
-// lat
-// long
-// extent
+// natParksFinal.csv contains
+// Code
+// Name
+// Latitude
+// Longitude
+// Acres
+// att_2011
+// att_2012
+// att_2013
+// att_2014
+// att_2015
+// att_2016
+// att_2017
+// att_2018
+// att_2019
+// att_2020
+// att_Average
 
 var NPSplaceRandomLatLong;
 
-d3.csv("national_park_system.csv").then(function (NPSData) {
+d3.csv("natParksFinal.csv").then(function (NPSData) {
   // Cast strings to numbers for each record in NPSData
   NPSData.forEach(function (data) {
-    data.lat = +data.lat;
-    data.long = +data.long;
+    data.Latitude = +data.Latitude;
+    data.Longitude = +data.Longitude;
+    data.Acres = +data.Acres;
+    data.att_2011 = +data.att_2011;
+    data.att_2012 = +data.att_2012;
+    data.att_2013 = +data.att_2013;
+    data.att_2014 = +data.att_2014;
+    data.att_2015 = +data.att_2015;
+    data.att_2016 = +data.att_2016;
+    data.att_2017 = +data.att_2017;
+    data.att_2018 = +data.att_2018;
+    data.att_2019 = +data.att_2019;
+    data.att_2020 = +data.att_2020;
+    data.att_Average = +data.att_Average;
   });
 
-  // set a variable that stores how many records there are in this set:
+  // set a variable that stores how many records there are in this dataset:
   NPSplaceCount = NPSData.length;
-  NPSplaceRandom = Math.floor(Math.random() * NPSplaceCount);
-
-  // look at NPSData
-  console.log(`The National Park System (NPS) dataset (from .CSV) is ${NPSplaceCount} records long:`);
+  console.log(`The National Park System (NPS) dataset natParksFinal.csv is ${NPSplaceCount} records long:`);
   console.log(NPSData);
-
-  NPSplaceRandomLatLong = [NPSData[NPSplaceRandom].lat, NPSData[NPSplaceRandom].long];
+ 
+  // pick a number at random to pull that record from this dataset:
+  NPSplaceRandom = Math.floor(Math.random() * NPSplaceCount);
+  console.log(`Our code chose record ${NPSplaceRandom} at random.`);
+ 
+  // retrieve the lat and long from this record and put it into an array:
+  NPSplaceRandomLatLong = [NPSData[NPSplaceRandom].Latitude, NPSData[NPSplaceRandom].Longitude];
+  console.log(`Random NPS unit (park): ${NPSData[NPSplaceRandom].Name}, code: ${NPSData[NPSplaceRandom].Code}. Representative point: ${NPSplaceRandomLatLong}.`);
   console.log(`NPSplaceRandomLatLong[0] contains ${NPSplaceRandomLatLong[0]}`);
   console.log(`NPSplaceRandomLatLong[1] contains ${NPSplaceRandomLatLong[1]}`);
-  console.log(`An NPS place at random from imported .CSV is ${NPSData[NPSplaceRandom].name} at ${NPSplaceRandomLatLong}.`);
 
+
+
+  // B. import points of interest dataset
 
   var POIData = "";
-  // points_of_interest.csv
+  // filteredPoints.csv
   // OBJECTID
-  // MAPLABEL
-  // POITYPE
-  // lat
-  // long
+  // Name
+  // Type
+  // Latitude
+  // Longitude
 
-  d3.csv("points_of_interest.csv").then(function (POIData) {
-
-    // look at POIData
-    console.log(`The points-of-interest dataset from .CSV is ${POIData.length} records long:`);
-    console.log(POIData);
+  d3.csv("filteredPoints.csv").then(function (POIData) {
 
     // Cast strings to numbers for each record in NPSData
     POIData.forEach(function (data) {
-      data.OBJECTID = +data.OBJECTID;
-      data.lat = +data.lat;
-      data.long = +data.long;
+      data.lat = +data.Latitude;
+      data.long = +data.Longitude;
     });
+    // look at POIData
+    console.log(`The points-of-interest dataset from filteredPoints.CSV is ${POIData.length} records long:`);
+    console.log(POIData);
+   
   });
 
-  // attendance.csv
 
-  var attendanceData = [];
-  // attendance.csv
-  // code
-  // name
-  // a2011
-  // a2012
-  // a2013
-  // a2014
-  // a2015
-  // a2016
-  // a2017
-  // a2018
-  // a2019
-  // a2020
-  // average
 
-  d3.csv("attendance.csv").then(function (attendanceData) {
 
-    // look at attendanceData
-    console.log(`The attendance dataset from .CSV is ${attendanceData.length} records long:`);
-    console.log(attendanceData);
 
-    // Cast strings to numbers for each record in NPSData
-    attendanceData.forEach(function (data) {
-      data.a2011 = +data.a2011;
-      data.a2012 = +data.a2012;
-      data.a2013 = +data.a2013;
-      data.a2014 = +data.a2014;
-      data.a2015 = +data.a2015;
-      data.a2016 = +data.a2016;
-      data.a2017 = +data.a2017;
-      data.a2018 = +data.a2018;
-      data.a2019 = +data.a2019;
-      data.a2020 = +data.a2020;
-      data.average = +data.average;
-    });
-  });
-
-  console.log("If the next line is an error message, that suggests I can't get at a variable declared inside a D3 function from outside D3, which suggests either doing everything inside D3 functions or finding a different way to import .CSVs into JavaScript.");
-  console.log(NPSplaceRandomLatLong);
-
-  benji.csv("national_park_system.csv", function (NPSData) {
-    var NPSplaceCount = NPSData.length;
-    var NPSplaceRandom = Math.floor(Math.random() * NPSplaceCount);
-    var NPSplaceRandomLatLong = [NPSData[NPSplaceRandom].lat, NPSData[NPSplaceRandom].long];
-    console.log("But if the next console.log statement works, that suggests I can.");
-    console.log(`An NPS place at random from a sample dataset imported from .CSV is ${NPSData[NPSplaceRandom].name} at ${NPSplaceRandomLatLong}.`);
 
     // pass the lat long coordinates of the place chosen at random from NSP places into a new variable, centerLatLong, for mapmaking.
     centerLatLong = NPSplaceRandomLatLong;
+
 
     // II. MAKE A MAP
 
@@ -152,7 +134,7 @@ d3.csv("national_park_system.csv").then(function (NPSData) {
     // Create a map object.
     var myMap = L.map("map", {
       center: NPSplaceRandomLatLong,
-      zoom: 13,
+      zoom: 9,
       layers: [satellite]
 // add to the array in line 156 the other layers I want: parks and points of interest
 
@@ -233,7 +215,7 @@ d3.csv("national_park_system.csv").then(function (NPSData) {
     // People get how wide a circle is, so that's what we should let them choose.
     // (This does so at random, for the moment.)
     // ******
-    var diameter = Math.random() * 10 + .5;
+    var diameter = Math.round(Math.random() * 10 + .5);
     console.log(`The circle is set to have a ${diameter}-mile diameter on the previous line of code.`);
     // ******
 
@@ -417,9 +399,5 @@ d3.csv("national_park_system.csv").then(function (NPSData) {
 
     console.log(`Based on a largest circle ${diameter} miles across, this map is reset to zoom level ${zoom}.`);
     console.log("The main variables are now initialized.");
-
-
-
-  });
 
 });
