@@ -1,4 +1,4 @@
-## Places in the U.S. National Park System: Their points of interest, and relative scale, and attendance
+## Places in the U.S. National Park System: Their points of interest, relative scale, and attendance
 
 ### Project2: Data Analytics and Visualization Boot Camp, University of Minnesota
 
