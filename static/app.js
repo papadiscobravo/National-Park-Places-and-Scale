@@ -48,7 +48,7 @@ d3.csv("natParksFinal.csv").then(function (NPSData) {
   // set a variable that stores how many records there are in this dataset:
   NPSplaceCount = NPSData.length;
   console.log(`natParksFinal.csv: ${NPSplaceCount} records`);
-  // console.log(NPSData);
+  console.log(NPSData);
  
   // pick a number at random to pull that record from this dataset:
   NPSplaceRandom = Math.floor(Math.random() * NPSplaceCount);
@@ -61,6 +61,8 @@ d3.csv("natParksFinal.csv").then(function (NPSData) {
     ${Math.round(NPSData[NPSplaceRandom].Acres)} acres
     ${NPSplaceRandomLatLong} lat long
   `);
+console.log(NPSData[NPSplaceRandom].Latitude);
+console.log(NPSData[NPSplaceRandom].Longitude);
 
 
   // console.log(`NPSplaceRandomLatLong[0] contains ${NPSplaceRandomLatLong[0]}`);
@@ -105,7 +107,7 @@ d3.csv("natParksFinal.csv").then(function (NPSData) {
     // People get how wide a circle is, so that's what we should let them choose.
     // (This does so at random, for the moment.)
     // ******
-    var maxDiameter = 1000;
+    var maxDiameter = 100;
     var diameter = Math.floor(Math.round((Math.random() * maxDiameter)))+1;
     // console.log(`The circle is set to have a ${diameter}-mile diameter.`);
     // ******
@@ -130,25 +132,26 @@ d3.csv("natParksFinal.csv").then(function (NPSData) {
 
     // Here's the switch statement that does the evaluation based on that threshold
     // and the real-world dimensions of some common objects:
+    console.log("switch results:");
 
     switch (diameter / 96 < maxCommonObjects) {
 
-      case diameter * 5280 / 5.5 < maxCommonObjects:
+      case (diameter * 5280) / 5.5 < maxCommonObjects:
         // 5.5 ft
         console.log(`A person in the U.S. is about 5' 6" tall on average. If people laid down head to toe, the largest circle would be ${Math.round((miles * 2 * 5280 / 5.5) * 10) / 10} people across.`);
         break;
 
-      case diameter * 5280 / 35 < maxCommonObjects:
+      case (diameter * 5280) / 35 < maxCommonObjects:
         // 35 ft
         console.log(`Many full-sized school buses are about 35 feet long. The largest circle would be ${Math.round((miles * 2 * 5280 / 35) * 10) / 10} such school buses across.`);
         break;
 
-      case diameter * 5280 / 231.3 < maxCommonObjects:
+      case (diameter * 5280) / 231.3 < maxCommonObjects:
         // 231.3 ft
         console.log(`A 747 jet airliner is 231.3 feet long. The largest circle would be ${Math.round((miles * 2 * 5280 / 231.3) * 10) / 10} 747s across.`);
         break;
 
-      case diameter * 5280 / 1063 < maxCommonObjects:
+      case (diameter * 5280) / 1063 < maxCommonObjects:
         // 1063 ft
         console.log(`The Eiffel Tower is currently 1063 feet tall. If you could lay it on its side, the largest circle would be ${Math.round((miles * 2 * 5280 / 1063) * 10) / 10} Eiffel Towers across.`);
         break;
@@ -161,13 +164,40 @@ d3.csv("natParksFinal.csv").then(function (NPSData) {
       case diameter / 13.4 >= maxCommonObjects:
         // 96 miles
         console.log(`Delaware is 96 miles long. The largest circle would be ${Math.round((miles * 2 / 96) * 10) / 10} Delawares long.`);
-        break;
     };
+
+
+    console.log("if-then results:");
+
+      if ((diameter * 5280) / 5.5 < maxCommonObjects) {
+        // 5.5 ft
+        console.log(`A person in the U.S. is about 5' 6" tall on average. If people laid down head to toe, the largest circle would be ${Math.round((miles * 2 * 5280 / 5.5) * 10) / 10} people across.`);
+        }
+      else if ((diameter * 5280) / 35 < maxCommonObjects) {
+        // 35 ft
+        console.log(`Many full-sized school buses are about 35 feet long. The largest circle would be ${Math.round((miles * 2 * 5280 / 35) * 10) / 10} such school buses across.`);
+        }
+      else if ((diameter * 5280) / 231.3 < maxCommonObjects) {
+        // 231.3 ft
+        console.log(`A 747 jet airliner is 231.3 feet long. The largest circle would be ${Math.round((miles * 2 * 5280 / 231.3) * 10) / 10} 747s across.`);
+        }
+      else if ((diameter * 5280) / 1063 < maxCommonObjects) {
+        // 1063 ft
+        console.log(`The Eiffel Tower is currently 1063 feet tall. If you could lay it on its side, the largest circle would be ${Math.round((miles * 2 * 5280 / 1063) * 10) / 10} Eiffel Towers across.`);
+        }
+      else if ((diameter / 13.4) < maxCommonObjects) {
+        // 13.4 miles
+        console.log(`The island of Manhattan's about 13.4 miles from top to bottom. The largest circle would be ${Math.round((miles * 2 / 13.4) * 10) / 10} Manhattans across.`);
+        }
+      else if ((diameter / 13.4) >= maxCommonObjects) {
+        // 96 miles
+        console.log(`Delaware is 96 miles long. The largest circle would be ${Math.round((miles * 2 / 96) * 10) / 10} Delawares long.`);
+        };
 
     console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
 
-      // IIC. HOW MANY CONCENTRIC CIRCLES?
+      // IIC. HOW MANY CONCENTRIC CIRCLES TO PLOT?
     // We said we'd give visitors variable to change (probably with a drop-down)
     // that specifies how many concentric circles there should be.
     // (Just for the moment, it's choosing a value at random.)
@@ -260,7 +290,7 @@ var zoom = 3
 
 
 // Now we have to switch gears and make a map in order to have a map to plot circles on.
-    // III. MAKE A MAP
+    // IIIA. MAKE A MAP
 
     // all the MapBox styles are at https://docs.mapbox.com/api/maps/styles/#mapbox-styles
     var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -375,7 +405,7 @@ var zoom = 3
 
 
 
-    // IIE. PICK COLORS, DRAW CIRCLES, ADD THEM TO MAP
+    // IIE. PICK COLORS AND PLOT CIRCLES ON THE MAP
     // Color is the color of the *boundary* of the concentric circle.
 Color = "#ffffff";
 
@@ -400,7 +430,7 @@ if (diameter <= 1) {
 
         console.log(`Drew ${Math.round(miles*2*5280)}-foot diameter circle enclosing an area of ${Math.round(miles*miles*Math.PI)} square miles (${Math.round(miles*miles*Math.PI*27878400)} square feet) around the center point`);
     };
-console.log(`checked whether largest circle (${miles}-mile radius) was greater than one mile.`);
+console.log(`checked whether largest circle (${miles}-mile radius) was greater than one mile and plotted circles accordingly.`);
 
 // ...but if someone wants to see a circle with a radius of a mile or more,
 // draw concentric circles:
@@ -424,6 +454,31 @@ if (diameter > 1) {
         };
         // console.log(`Finished running the concentric circles loop.`);
     };
+
+console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+
+
+
+
+// IIIB. BIND MARKERS TO MAP FOR EACH NPS UNIT ("PARK")
+
+// NPSplaceCount stores how many records there are in our dataset of NPS units:
+
+  // This loops through the array called places and creates one marker for each place,
+  // then binds a popup containing that place's info and adds it to the map.
+
+  for (var i = 0; i < NPSplaceCount; i++) {
+    var unit = NPSData[i];
+    // console.log(unit.Code);
+    // console.log(unit.Latitude);
+    // console.log(unit.Longitude);
+    L.marker([unit.Latitude, unit.Longitude])
+      .bindPopup("<h2>" + unit.Name + "</h2><h3>" + Math.round((unit.Acres) * 10) / 10 + " acres<br>" + unit.att_Average + " visitors per year (2011-2020 avg)</h3>")
+      .addTo(myMap);
+    // console.log(`marked ${i+1}`);
+  };
+
+console.log(`Popups bound to markers placed on map.`);
 
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
