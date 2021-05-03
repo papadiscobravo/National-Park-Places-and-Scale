@@ -48,7 +48,7 @@ d3.csv("natParksFinal.csv").then(function (NPSData) {
   // set a variable that stores how many records there are in this dataset:
   NPSplaceCount = NPSData.length;
   console.log(`natParksFinal.csv: ${NPSplaceCount} records`);
-  console.log(NPSData);
+  // console.log(NPSData);
  
   // pick a number at random to pull that record from this dataset:
   NPSplaceRandom = Math.floor(Math.random() * NPSplaceCount);
@@ -57,12 +57,19 @@ d3.csv("natParksFinal.csv").then(function (NPSData) {
   NPSplaceRandomLatLong = [NPSData[NPSplaceRandom].Latitude, NPSData[NPSplaceRandom].Longitude];
   
   console.log(`${NPSplaceRandom} ${NPSData[NPSplaceRandom].Code}
-    ${NPSData[NPSplaceRandom].Name} 
+    ${NPSData[NPSplaceRandom].Name}
     ${Math.round(NPSData[NPSplaceRandom].Acres)} acres
     ${NPSplaceRandomLatLong} lat long
   `);
 console.log(NPSData[NPSplaceRandom].Latitude);
 console.log(NPSData[NPSplaceRandom].Longitude);
+
+console.log(`starting the function to send ${NPSData[NPSplaceRandom].Name} to label div in HTML.`);
+// print the name of the NPS unit chosen at random to the HTML
+window.onload = function(){
+  document.getElementById('label').innerHTML = NPSData[NPSplaceRandom].Name;
+};
+console.log(`${NPSData[NPSplaceRandom].Name} sent to label div in HTML.`);
 
 
   // console.log(`NPSplaceRandomLatLong[0] contains ${NPSplaceRandomLatLong[0]}`);
@@ -113,13 +120,14 @@ console.log(NPSData[NPSplaceRandom].Longitude);
     // ******
 
     // Radius is not so relatable, but it's how JS and Leaflet do the math.
-    // Here I'm calling it miles.
+    // Here I'm calling radius miles.
     miles = diameter / 2;
+    var diameterInFeet = Math.round((diameter * 5280));
     miles = Math.round((diameter * 10)) / 10;
 
     // Tell the visitor how big the outer circle is--for now, console.log:
-    console.log(`${diameter} miles is ${Math.round(diameter * 5280)} feet. Let's put that another way:`);
-
+    outerCircleDims = `The outer circle is ${diameter} miles (${diameterInFeet} feet) in diameter, or about `;
+    console.log(outerCircleDims);
 
       // IIB. HOW MANY DELAWARES IS THAT?
     // All of this evaluates diameter against common dimensions,
@@ -130,69 +138,32 @@ console.log(NPSData[NPSplaceRandom].Longitude);
     // This sets that threshold of 100 in a way we can change if needed.
     var maxCommonObjects = 100;
 
-    // Here's the switch statement that does the evaluation based on that threshold
-    // and the real-world dimensions of some common objects:
-    console.log("switch results:");
-
-    switch (diameter / 96 < maxCommonObjects) {
-
-      case (diameter * 5280) / 5.5 < maxCommonObjects:
+      if (diameterInFeet / 5.5 < maxCommonObjects) {
         // 5.5 ft
-        console.log(`A person in the U.S. is about 5' 6" tall on average. If people laid down head to toe, the largest circle would be ${Math.round((miles * 2 * 5280 / 5.5) * 10) / 10} people across.`);
-        break;
+        scaleText = `${Math.round((diameterInFeet / 5.5))} <a href="https://www.cdc.gov/nchs/data/nhsr/nhsr122-508.pdf" target="_blank">people</a> across, if they lay down head to toe.`;
+      }
 
-      case (diameter * 5280) / 35 < maxCommonObjects:
+      else if (diameterInFeet / 35 < maxCommonObjects) {
         // 35 ft
-        console.log(`Many full-sized school buses are about 35 feet long. The largest circle would be ${Math.round((miles * 2 * 5280 / 35) * 10) / 10} such school buses across.`);
-        break;
-
-      case (diameter * 5280) / 231.3 < maxCommonObjects:
+        scaleText = `${Math.round((diameterInFeet / 35))} <a href="https://www.trackschoolbus.com/blog/what-is-the-average-size-of-a-school-bus/" target = "_blank">school buses</a> across.`;
+      }
+      else if (diameterInFeet / 231.3 < maxCommonObjects) {
         // 231.3 ft
-        console.log(`A 747 jet airliner is 231.3 feet long. The largest circle would be ${Math.round((miles * 2 * 5280 / 231.3) * 10) / 10} 747s across.`);
-        break;
-
-      case (diameter * 5280) / 1063 < maxCommonObjects:
+        scaleText = `${Math.round((diameterInFeet / 231.3))} <a href="https://en.wikipedia.org/wiki/Boeing_747" target="_blank">747s</a> across.`;
+      }
+      else if (diameterInFeet / 1063 < maxCommonObjects) {
         // 1063 ft
-        console.log(`The Eiffel Tower is currently 1063 feet tall. If you could lay it on its side, the largest circle would be ${Math.round((miles * 2 * 5280 / 1063) * 10) / 10} Eiffel Towers across.`);
-        break;
-
-      case diameter / 13.4 < maxCommonObjects:
+        scaleText = `${Math.round((diameterInFeet / 1063))} <a href="https://en.wikipedia.org/wiki/Eiffel_Tower" target="_blank">Eiffel Towers</a> across (if you could lay the Eiffel Tower on its side).`;
+      }
+      else if ((diameterInFeet / (13.4 * 5280)) < maxCommonObjects) {
         // 13.4 miles
-        console.log(`The island of Manhattan's about 13.4 miles from top to bottom. The largest circle would be ${Math.round((miles * 2 / 13.4) * 10) / 10} Manhattans across.`);
-        break;
-
-      case diameter / 13.4 >= maxCommonObjects:
+        scaleText = `${Math.round((diameterInFeet / (13.4 * 5280)))} <a href="https://en.wikipedia.org/wiki/Manhattan" target="_blank">islands of Manhattan</a> across.`;
+      }
+      else {
         // 96 miles
-        console.log(`Delaware is 96 miles long. The largest circle would be ${Math.round((miles * 2 / 96) * 10) / 10} Delawares long.`);
-    };
-
-
-    console.log("if-then results:");
-
-      if ((diameter * 5280) / 5.5 < maxCommonObjects) {
-        // 5.5 ft
-        console.log(`A person in the U.S. is about 5' 6" tall on average. If people laid down head to toe, the largest circle would be ${Math.round((miles * 2 * 5280 / 5.5) * 10) / 10} people across.`);
-        }
-      else if ((diameter * 5280) / 35 < maxCommonObjects) {
-        // 35 ft
-        console.log(`Many full-sized school buses are about 35 feet long. The largest circle would be ${Math.round((miles * 2 * 5280 / 35) * 10) / 10} such school buses across.`);
-        }
-      else if ((diameter * 5280) / 231.3 < maxCommonObjects) {
-        // 231.3 ft
-        console.log(`A 747 jet airliner is 231.3 feet long. The largest circle would be ${Math.round((miles * 2 * 5280 / 231.3) * 10) / 10} 747s across.`);
-        }
-      else if ((diameter * 5280) / 1063 < maxCommonObjects) {
-        // 1063 ft
-        console.log(`The Eiffel Tower is currently 1063 feet tall. If you could lay it on its side, the largest circle would be ${Math.round((miles * 2 * 5280 / 1063) * 10) / 10} Eiffel Towers across.`);
-        }
-      else if ((diameter / 13.4) < maxCommonObjects) {
-        // 13.4 miles
-        console.log(`The island of Manhattan's about 13.4 miles from top to bottom. The largest circle would be ${Math.round((miles * 2 / 13.4) * 10) / 10} Manhattans across.`);
-        }
-      else if ((diameter / 13.4) >= maxCommonObjects) {
-        // 96 miles
-        console.log(`Delaware is 96 miles long. The largest circle would be ${Math.round((miles * 2 / 96) * 10) / 10} Delawares long.`);
-        };
+        scaleText = `${Math.round((diameterInFeet / (96 * 5280)))} <a href="https://en.wikipedia.org/wiki/Delaware" target="_blank">Delawares</a> aross.`;
+      };
+      console.log(scaleText);
 
     console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
@@ -214,7 +185,8 @@ console.log(NPSData[NPSplaceRandom].Longitude);
 
     // how many miles apart is one concentric circle from the next?
     var radiusIncrements = miles / divisions;
-    console.log(`Each circle will be ${Math.round(radiusIncrements * 10) / 10} miles (${Math.round(radiusIncrements * 5280)} feet), or about a ${Math.round(radiusIncrements * 20)} minute walk, from the next.`);
+    circleText = `Each circle will be ${Math.round(radiusIncrements * 10) / 10} miles (${Math.round(radiusIncrements * 5280)} feet) from the next, or about ${Math.round(radiusIncrements * 20)} minutes walk.`;
+    // console.log(circleText);
 
 
       // IID. HOW DOES DIAMETER RELATE TO ZOOM LEVEL?
@@ -259,6 +231,14 @@ var zoom = 3
 
     console.log(`${diameter} mile Ø`);
     console.log(`zoom level ${zoom}`);
+
+        // print a statement about scale to the HTML
+        window.onload = function(){
+          document.getElementById('scale').innerHTML =  "<i>starting zoom level: " + zoom + "</i><br>" + outerCircleDims + scaleText + "<br>" + circleText;
+        };
+        console.log("Scale text sent to scale div in HTML.");
+    
+    
 
     // I made a table of what size circle fit well at what zoom level on my computer.
     // It would be different based on a device's screen resolution, as well as what percent of the browser window the map takes up,
@@ -501,11 +481,9 @@ console.log("-_-_-_-_-_-_-_-_-_-_-_-");
     // console.log(`marked ${i+1}`);
   };
 
-console.log(`Popups bound to markers placed on map.`);
+console.log(`Popups bound to markers and placed on map.`);
 
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
-
-
 
 
 });
