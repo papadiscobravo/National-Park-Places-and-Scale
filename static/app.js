@@ -469,14 +469,34 @@ console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
   for (var i = 0; i < NPSplaceCount; i++) {
     var unit = NPSData[i];
+
+    unitSearchName = "";
+    unitName = "";
+    unitVisitors = "";
+    unitAcres = "";
+    unitVisitorsPerAcre = "";
+    
+    unitSearchName = unit.Name.replace(/ /g, '+');
+    unitName = `<a href=http://www.google.com/search?q="${unitSearchName}" target="_blank">${unit.Name}</a>`;
+
+    unitAcres = `${Math.round((unit.Acres) * 10) / 10} acres`;
+
+    if (unit.att_Average > 0) {
+      unitVisitors = `${unit.att_Average} visitors each year<br>`;
+      unitVisitorsPerAcre = `${Math.round((unit.att_Average / unit.Acres) * 10 ) / 10} visitors per acre each year`;
+    }
+    else if (unit.att_Average = 0) {
+      unitVisitors = "attendance data not available";
+      unitVisitorsPerAcre = "";
+    };
+
     // console.log(unit.Code);
     // console.log(unit.Latitude);
     // console.log(unit.Longitude);
-    unitSearchName = unit.Name.replace(/ /g, '+');
-    L.marker([unit.Latitude, unit.Longitude])
-    .bindPopup("<h3><a href=http://www.google.com/search?q=" + unitSearchName + " target=_blank>" + unit.Name + "</a></h3>" + 
-    "<h4>" + unit.att_Average + " visitors per year<br>" + 
-    Math.round((unit.Acres) * 10) / 10 + " acres</h4>")
+    // console.log(visitors);
+
+    L.marker([unit.Latitude, unit.Longitude], title = unit.Name)
+    .bindPopup("<h3>" + unitName + "</h3>" + "<h4>" + unitVisitors + unitAcres + "<br>" + unitVisitorsPerAcre + "</h4>")
     .addTo(myMap);
     // console.log(`marked ${i+1}`);
   };
