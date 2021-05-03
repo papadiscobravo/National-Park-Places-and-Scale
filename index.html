@@ -36,9 +36,21 @@
   </div>
 
 
-  <!-- The div where the map goes-->
-  <div id="map"></div><br>
-Visitors per year is the mean of 2011-2020 annual attendance figures.
+  <!-- the div where the map goes-->
+  <div id="map"></div>
+
+  <!-- the div where how many Delawares across goes-->
+  <div id="scale"></div>
+
+  <!-- the div where information about sources goes-->
+  <div id="footnote">
+Visitors per year is the mean of 2011-2020 annual attendance figures as found in [source].<br>
+Area begins as a value from [source] autopopulated by ESRI software based on <a href="https://en.wikipedia.org/wiki/Web_Mercator_projection" target="_blank">WGS 1984 Web</a> <a href="https://imgs.xkcd.com/comics/mercator_projection.png" target="_blank">Mercator</a>.<br>
+Thanks to Roger Johnson, Chief Cartographer, Washington Support Office Land Resources Division, Fort Collins Technical Center, National Park Service, and Cam Peterson, GIS/Data Analyst at GEOSYS, for clarification on area.<br>
+Special thanks to Matthew Rowbotham of the North Country Trail Association for converting these to acres in <a href="https://en.wikipedia.org/wiki/Albers_projection" target="_blank">North America Albers Equal Area Conic</a> projection.
+A spot-check of results show 555.200203 acres for <a href="https://www.nps.gov/muwo/index.htm" target="_blank"></a>Muir Woods National Monument</a>, which <a href="https://en.wikipedia.org/wiki/Muir_Woods_National_Monument" target="_blank"></a>Wikipedia</a> lists as 554 acres.
+  </div>
+  
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
