@@ -32,7 +32,7 @@ var NPSplaceRandomLatLong;
 // });
 
 
-d3.csv("resources/natParksFinal.json").then(function (NPSData) {
+d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
   // Cast strings to numbers for each record in NPSData
   NPSData.forEach(function (data) {
     data.Latitude = +data.Latitude;
