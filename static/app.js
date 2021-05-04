@@ -8,11 +8,13 @@ function InitDashboard() {
 
     DrawParkAreaByLatitude()
     DrawLongitudeByParkArea()
-    UpdateBargraph(selectedParkId); 
+    UpdateMapAndText()
+    UpdateBarGraph(selectedParkId);
+
 }
 
 // This can live in another .js file altogether such as emerson.js
-function UpdateBargraph(parkId) {
+function UpdateBarGraph(parkId) {
 
     console.log(`UpdateBargraph(${parkId})`); 
 
@@ -29,8 +31,8 @@ function eventHandler(event) {
     // figure out what was clicked
     // figure out which park to draw
 
-    UpdateMap(newParkId);
-    UpdateBargraph(newParkId); 
+    UpdateMapAndText(newParkId);
+    UpdateBarGraph(newParkId); 
 }; 
 
 // selectedParkId = "abcd"; 
