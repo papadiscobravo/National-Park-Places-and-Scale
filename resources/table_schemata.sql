@@ -1,5 +1,7 @@
 -- Drop tables if exist
-DROP TABLE natparks, pointsinterest, parkinglots;
+DROP TABLE natparks, sportsactivities, amenities, attractions,
+	boating, camping, emergency, historic, parkinglots,
+	parkingtransportation;
 
 -- Create natparks table
 CREATE TABLE natparks (
@@ -22,8 +24,62 @@ CREATE TABLE natparks (
 	att_average int
 );
 
--- Create pointsinterest table
-CREATE TABLE pointsinterest (
+-- Create sportsactivities table
+CREATE TABLE sportsactivities (
+	id serial PRIMARY KEY,
+	name VARCHAR not null,
+    type VARCHAR not null,
+    latitude float,
+    longitude float
+);
+
+-- Create amenities table
+CREATE TABLE amenities (
+	id serial PRIMARY KEY,
+	name VARCHAR not null,
+    type VARCHAR not null,
+    latitude float,
+    longitude float
+);
+
+-- Create attractions table
+CREATE TABLE attractions (
+	id serial PRIMARY KEY,
+	name VARCHAR not null,
+    type VARCHAR not null,
+    latitude float,
+    longitude float
+);
+
+-- Create boating table
+CREATE TABLE boating (
+	id serial PRIMARY KEY,
+	name VARCHAR not null,
+    type VARCHAR not null,
+    latitude float,
+    longitude float
+);
+
+-- Create camping table
+CREATE TABLE camping (
+	id serial PRIMARY KEY,
+	name VARCHAR not null,
+    type VARCHAR not null,
+    latitude float,
+    longitude float
+);
+
+-- Create emergency table
+CREATE TABLE emergency (
+	id serial PRIMARY KEY,
+	name VARCHAR not null,
+    type VARCHAR not null,
+    latitude float,
+    longitude float
+);
+
+-- Create historic table
+CREATE TABLE historic (
 	id serial PRIMARY KEY,
 	name VARCHAR not null,
     type VARCHAR not null,
@@ -40,7 +96,23 @@ CREATE TABLE parkinglots (
     longitude float
 );
 
+-- Create parkingtransportation table
+CREATE TABLE parkingtransportation (
+	id serial PRIMARY KEY,
+	name VARCHAR not null,
+    type VARCHAR not null,
+    latitude float,
+    longitude float
+);
+
 -- Verify data has been imported (execute each line separately)
 SELECT * FROM natparks;
-SELECT * FROM pointsinterest;
+SELECT * FROM sportsactivities;
+SELECT * FROM amenities;
+SELECT * FROM attractions;
+SELECT * FROM boating;
+SELECT * FROM camping;
+SELECT * FROM emergency;
+SELECT * FROM historic;
 SELECT * FROM parkinglots;
+SELECT * FROM parkingtransportation;
