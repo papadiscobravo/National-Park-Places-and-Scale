@@ -46,7 +46,7 @@ This one-page dashboard shows a map of places in the U.S. National Park System.
 &nbsp;Everything we do, put it into a function.
 
 #### instructions
-1. Clone this repo.
-1. Do this.
-1. Then do that.
-1. Then do another thing.
+1. &nbsp;Clone this repo.
+1. &nbsp;Do this.
+1. &nbsp;Then do that.
+1. &nbsp;Then do another thing.
