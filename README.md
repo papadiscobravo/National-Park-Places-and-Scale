@@ -43,7 +43,7 @@ This one-page dashboard shows a map of places in the U.S. National Park System.
 1. Make sure HTML and CSS are making the page look really sharp. -we'll circle back to this.
 
 1. Benji advises: &nbsp;Don't put logic on the outermost level of any of these files.
-Everything we do, put it into a function.
+&nbsp;Everything we do, put it into a function.
 
 #### instructions
 1. Clone this repo.
