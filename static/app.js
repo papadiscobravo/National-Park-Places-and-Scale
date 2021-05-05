@@ -16,9 +16,9 @@ function InitDashboard() {
 }
 
 // This should live in paul.js
-function UpdateMapAndText(ParkID) {
+function DrawMapAndText(ParkID) {
 
-    console.log(`UpdateMapAndText(${ParkID})`); 
+    console.log(`DrawMapAndText(${ParkID})`); 
 
     // Paul has written most of this function. This function's job is to 
     // import all data about the 418 units ('parks') in the National Park System,
@@ -29,6 +29,28 @@ function UpdateMapAndText(ParkID) {
     // start by plotting concentric circles over the place chosen at random,
     // set a zoom level that shows the outermost circle, and
     // let the viewer choose how big the outermost circle is.
+    
+    d3.json("/maproute").then(data => {
+
+        // Filter the data to get values for ParkID
+        // Draw the graph
+    }); 
+}
+
+
+// This should live in paul.js
+function UpdateMapAndText(ParkID) {
+
+    console.log(`UpdateMapAndText(${ParkID})`); 
+
+    // Paul will write this function.
+    // The website visitor clicks on one of the 418 unit markers and the map is recentered on it,
+    // concentric circles are plotted over the chosen place,
+    // a zoom level is set that shows the outermost circle,
+    // a menu item appears that lets the viewer choose how big the outermost circle is in miles,
+    // new text appears describing the scale of the outermost circle.
+    // This mouse click will also trigger Emerson's bar graph to redraw attendance figures for the newly chosen NPS unit.
+
     // Maybe this work should be done in more than one function.
     // For instance, maybe
         // draw base map, plot 418 units on it, pick one at random,

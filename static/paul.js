@@ -1,9 +1,8 @@
 console.log("paul.js loaded");
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
-// I. IMPORT SOME DATA
-
-  // A. import data about the 427 or so units (parks) in the NationalPark System.
+// IA IMPORT SOME DATA
+  // import data about the 427 or so units (parks) in the NationalPark System.
 
 var NPSData = {};
 // natParksFinal.csv contains
@@ -82,35 +81,8 @@ console.log(`${NPSData[NPSplaceRandom].Name} sent to label div in HTML.`);
   // console.log(`NPSplaceRandomLatLong[1] contains ${NPSplaceRandomLatLong[1]}`);
   console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
-
-
-  // B. import points of interest dataset
-
-  var POIData = "";
-  // filteredPoints.csv
-  // OBJECTID
-  // Name
-  // Type
-  // Latitude
-  // Longitude
-
-  d3.csv("filteredPoints.csv").then(function (POIData) {
-
-    // Cast strings to numbers for each record in NPSData
-    POIData.forEach(function (data) {
-      data.lat = +data.Latitude;
-      data.long = +data.Longitude;
-    });
-    // look at POIData
-    console.log(`filteredPoints.CSV: ${POIData.length} records (points of interest). Here's one that has nothing to do with ${NPSData[NPSplaceRandom].Name}:`);
-    console.log(POIData[ Math.floor(Math.round(Math.random() * POIData.length)) + 1 ]);
-   
-  });
-
-
-    // pass the lat long coordinates of the place chosen at random from NSP places into a new variable, centerLatLong, for mapmaking.
-    centerLatLong = NPSplaceRandomLatLong;
-
+  // pass the lat long coordinates of the place chosen at random from NSP places into a new variable, centerLatLong, for mapmaking.
+  centerLatLong = NPSplaceRandomLatLong;
 
 
     // II. CONCENTRIC CIRCLES
@@ -121,7 +93,8 @@ console.log(`${NPSData[NPSplaceRandom].Name} sent to label div in HTML.`);
     // (This does so at random, for the moment.)
     // ******
     var maxDiameter = 100;
-    var diameter = Math.floor(Math.round((Math.random() * maxDiameter)))+1;
+    var diameter = 4;
+    //    var diameter = Math.floor(Math.round((Math.random() * maxDiameter)))+1;
     // console.log(`The circle is set to have a ${diameter}-mile diameter.`);
     // ******
 
@@ -207,36 +180,64 @@ console.log(`${NPSData[NPSplaceRandom].Name} sent to label div in HTML.`);
 var zoom = 3
     // Here's an if-then statement that sets zoom level based on the radius of the outermost circle, set in the variable miles.
     // It deserves further refinement.
-    if (diameter < 20) {
+    if (diameter < 1.5) {
+      zoom = 14;
+    }
+
+    else if (diameter < 3) {
+      zoom = 13;
+    }
+
+    else if (diameter < 6) {
+      zoom = 12;
+    }
+
+    else if (diameter < 12) {
       zoom = 11;
     }
 
-    else if (diameter < 50) {
+    else if (diameter < 24) {
+      zoom = 10;
+    }
+
+    else if (diameter < 47) {
       zoom = 9;
     }
 
-    else if (diameter < 100) {
+    else if (diameter < 95) {
       zoom = 8;
     }
 
-    else if (diameter < 200) {
+    else if (diameter < 190) {
       zoom = 7;
     }
 
-    else if (diameter < 300) {
+    else if (diameter < 380) {
       zoom = 6;
     }
 
-    else if (diameter < 600) {
+    else if (diameter < 760) {
       zoom = 5;
     }
-    
-    else if (diameter < 1000) {
+
+    else if (diameter < 1520) {
       zoom = 4;
+    }
+
+    else if (diameter < 3040) {
+      zoom = 3;
+    }
+    
+    else if (diameter < 6080) {
+      zoom = 2;
     };
 
     console.log(`${diameter} mile Ø`);
     console.log(`zoom level ${zoom}`);
+    var worldMapPxDims = 256 * (2 ** zoom);
+    var thousandPxMapMilesWide = 1000 / worldMapPxDims * 24901;
+    console.log(`At this zoom level, the world in cylindrical projection would be a square ${worldMapPxDims} pixels on each side.`);
+    console.log(`You might imagine a 1000-pixel wide view of something at the equator was representing a view of the world ${Math.round(thousandPxMapMilesWide)} miles wide.`);
 
         // print a statement about scale to the HTML
         window.onload = function(){
@@ -245,39 +246,26 @@ var zoom = 3
         console.log("Scale text sent to scale div in HTML.");
     
     
+//  zoom         approx. width in miles            the whole world would be a  
+//  level    at equator of a 1000-pixel map     square this many pixels on a side
+//     3                 12159                              2048
+//     4                  6080                              4096
+//     5                  3040                              8192
+//     6                  1520                             16384
+//     7                   760                             32768
+//     8                   380                             65536
+//     9                   190                            131072
+//    10                    95                            262144
+//    11                    47                            524288
+//    12                    24               
+//    13                    12                 
 
-    // I made a table of what size circle fit well at what zoom level on my computer.
-    // It would be different based on a device's screen resolution, as well as what percent of the browser window the map takes up,
-    // but the real point is to avoic being zoomed so far in that the visitor only sees one circle, or none at all,
-    // and thinks it's broken.
-    // zoom   mile radius
-    //  2      5000
-    //  3      2500
-    //  4      1000      ******
-    //  5       750
-    //  6       400
-    //  7       200
-    //  8       100      ******
-    //  9        50
-    // 10        25
-    // 11        10      ******
-    // 12         7
-    // 13         3
-    // 14         1.5    ******
-    // 15         0.75
-    // 16         0.35
-    // 17         0.2
-    // 18         0.1    ******
-    // 19         0.05
-    // 20         0.025
-    // 21         0.0125 ******
-    // 22         0.00625
-    // 23         0.005
 
 
 // Now we have to switch gears and make a map in order to have a map to plot circles on.
     // IIIA. MAKE A MAP
 
+    // 1. Define base maps
     // all the MapBox styles are at https://docs.mapbox.com/api/maps/styles/#mapbox-styles
     var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
@@ -301,45 +289,43 @@ var zoom = 3
     });
 
     var baseMaps = {
-      Satellite: satellite,
-      Dark: dark,
-      Streets: streets
+      "satellite": satellite,
+      "grayed out": dark,
+      "streets": streets
     };
 
-    // console.log(`center lat long: ${centerLatLong}`);
-
-    var ctrLatitude = NPSplaceRandomLatLong[0];
-    // console.log(ctrLatitude);
-    var ctrLongitude = NPSplaceRandomLatLong[1];
-    // console.log(ctrLongitude);
-
-    // Create a map object. Here's where zoom is:
+    // 2. Create a map object. Here's where zoom is:
     var myMap = L.map("map", {
       center: NPSplaceRandomLatLong,
       zoom: zoom,
       layers: [satellite]
 // add to the array in line 156 the other layers I want: parks and points of interest
-
-
-    });
+});
     // console.log("map object created");
 
+
+    // 3. Create tile layer
     // Add the tile layer.
     L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
       tileSize: 512,
       maxZoom: 22,
+      id: "satellite-v9",
       zoomOffset: -1,
-      // I've just been commenting in and out different map views here.
-      // id: "mapbox/streets-v11",
-      // id: "mapbox/dark-v10",
-      id: "mapbox/satellite-v9",
-
       // API key
       accessToken: API_KEY
     }).addTo(myMap);
 
     // console.log("Added a tile layer, read in the API key, and set the map view.");
+
+    // var overlayMaps = {
+    //   "amenities": amenities,
+    //   "history": history
+    // };
+
+    L.control.layers(baseMaps).addTo(myMap);
+    layers: [satellite];
+
 
     console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
@@ -404,23 +390,9 @@ var fillColor = Color;
 var opacity = 0.05;
 console.log(`color: ${Color}, fillColor: ${fillColor}, opacity: ${opacity}`);
 
-// If someone wants to see a circle with a diameter of less than a mile,
-// this draws only one circle...
-if (diameter <= 1) {
-    L.circle(centerLatLong, {
-        color: Color,
-        fillColor: fillColor,
-        fillOpacity: opacity,
-        radius: miles * 1609.34
-        }).addTo(myMap);
-
-        console.log(`Drew ${Math.round(miles*2*5280)}-foot diameter circle enclosing an area of ${Math.round(miles*miles*Math.PI)} square miles (${Math.round(miles*miles*Math.PI*27878400)} square feet) around the center point`);
-    };
-console.log(`checked whether largest circle (${miles}-mile radius) was greater than one mile and plotted circles accordingly.`);
-
 // ...but if someone wants to see a circle with a radius of a mile or more,
 // draw concentric circles:
-if (diameter > 1) {
+if (diameter > 0) {
 
     // console.log(`Started running a loop to draw concentric circles out to ${miles} miles around the center point.s`);
 
@@ -492,4 +464,65 @@ console.log(`Popups bound to markers and placed on map.`);
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
 
+
+
+
+
+// IB. Import more data: points of interest dataset
+
+var POIhistoricData = "";
+// filteredPoints.csv
+// 
+// name
+// type
+// latitude
+// longitude
+
+d3.csv("resources/historicFinal.csv").then(function (POIhistoricData) {
+  POIhistoricLength = POIhistoricData.length;
+  // Cast strings to numbers for each record in historicFinal
+  POIhistoricData.forEach(function (data) {
+    data.lat = +data.Latitude;
+    data.long = +data.Longitude;
+  });
+  // look at POIData
+  console.log(`filteredPoints.CSV: ${POIhistoricLength} records (points of interest). Here's one that has nothing to do with the park unit chosen at random above:`);
+  console.log(POIhistoricData[ Math.floor(Math.round(Math.random() * POIhistoricLength)) + 1 ]);
+
+
+// This loops through the array called places and creates one marker for each place,
+  // then binds a popup containing that place's info and adds it to the map.
+
+  for (var i = 0; i < POIhistoricLength; i++) {
+    var POI = POIhistoricData[i];
+
+    POIsearchName = "";
+    POIname = "";
+    POItype = POI.type;
+    
+    POIsearchName = POI.name.replace(/ /g, '+');
+    POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
+
+    console.log(POI.name);
+    console.log(POI.type);
+    console.log(POI.latitude);
+    console.log(POI.longitude);
+    
+    L.marker([POI.latitude, POI.longitude], title = POI.name)
+    .bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>")
+    .addTo(myMap);
+    console.log(`marked ${i+1}`);
+  };
+
+console.log(`Popups bound to POI markers and placed on map.`);
+
+console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+
+// this ends the function that calls points of interest data 
+});
+
+
+
+
+// this ends the outermost function
 });
