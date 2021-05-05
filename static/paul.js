@@ -295,15 +295,15 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
     accessToken: API_KEY
   });
 
-  
-    // 5. This lists base maps for Layers Control:    
-    var baseMaps = {
-      "satellite": satellite,
-      "grayed out": dark,
-      "streets": streets
-    };
-    console.log("Here's what's in baseMaps:");
-    console.log(baseMaps);
+
+  // 5. This lists base maps for Layers Control:    
+  var baseMaps = {
+    "satellite": satellite,
+    "grayed out": dark,
+    "streets": streets
+  };
+  console.log("Here's what's in baseMaps:");
+  console.log(baseMaps);
 
 
   // 2. Create a map object. Here's where zoom is:
@@ -312,7 +312,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
     minZoom: minZoomLevel,
     zoom: zoom,
     maxZoom: maxZoomLevel,
-    layers: satellite
+    //here you've got to choose just 1 base layer. This code randomly chooses one of them, but you should probably make a choice.
+    layers: [satellite, dark, streets][Math.floor(Math.random() * 3)],
     // add to the array in line 156 the other layers I want: parks and points of interest
   });
   // console.log("map object created");
