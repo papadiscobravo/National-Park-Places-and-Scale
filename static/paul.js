@@ -173,7 +173,8 @@ console.log(`${NPSData[NPSplaceRandom].Name} sent to label div in HTML.`);
     // In the long switch statement below, value are added to this.
 
     
-    // This sets maximum zoom level for all tile layers
+    // This sets min and max zoom levels for use in all map layers
+    var minZoomLevel = 3;
     var maxZoomLevel = 22;
     console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
@@ -269,48 +270,115 @@ var zoom = 3
     // all the MapBox styles are at https://docs.mapbox.com/api/maps/styles/#mapbox-styles
     var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-      maxZoom: maxZoomLevel,
+      minZoom: minZoomLevel,
+      zoom: zoom,
+      maxZoom: maxZoomLevel,      
       id: "satellite-v9",
       accessToken: API_KEY
     });
 
     var dark = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-      maxZoom: maxZoomLevel,
+      minZoom: minZoomLevel,
+      zoom: zoom,
+      maxZoom: maxZoomLevel,      
       id: "dark-v10",
       accessToken: API_KEY
     });
 
     var streets = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-      maxZoom: maxZoomLevel,
+      minZoom: minZoomLevel,
+      zoom: zoom,
+      maxZoom: maxZoomLevel,      
       id: "streets-v11",
       accessToken: API_KEY
     });
 
-    var baseMaps = {
-      "satellite": satellite,
-      "grayed out": dark,
-      "streets": streets
-    };
-
     // 2. Create a map object. Here's where zoom is:
     var myMap = L.map("map", {
       center: NPSplaceRandomLatLong,
+      minZoom: minZoomLevel,
       zoom: zoom,
-      layers: [satellite]
+      maxZoom: maxZoomLevel,
+      layers: baseMaps
 // add to the array in line 156 the other layers I want: parks and points of interest
 });
     // console.log("map object created");
 
 
-    // 3. Create tile layer
-    // Add the tile layer.
+
+    // 3. Import more data: points of interest dataset
+
+var POIhistoricData = "";
+// filteredPoints.csv
+// 
+// name
+// type
+// latitude
+// longitude
+
+d3.csv("resources/historicFinal.csv").then(function (POIhistoricData) {
+  // This initializes an array that's going to contain all the Leaflet markers for this layer:
+  POImarkers = [];
+  
+  // This counts how many records there are to turn into markers for this layer: 
+  POIhistoricLength = POIhistoricData.length;
+  // This casts strings to numbers for each record's lat long:
+  POIhistoricData.forEach(function (data) {
+    data.latitude = +data.latitude;
+    data.longitude = +data.longitude;
+  });
+
+  // This loops through the POI data and creates one marker for each place,
+  // then binds a popup containing that place's info and adds it to a layer:
+  console.log(`Starting to loop through ${POIhistoricLength} points of interest and turn them into markers...`);
+  
+  for (var i = 0; i < POIhistoricLength; i++) {
+    var POI = POIhistoricData[i];
+
+    // This clears out anything left over in these variables from the last time the loop ran:
+    POIsearchName = ""
+    POIname = "";
+    POItype = POI.type;
+    
+    // This makes a new variable out of the POI's name and replaces all the spaces in it with plus signs for Google (next):
+    POIsearchName = POI.name.replace(/ /g, '+');
+
+    // This concatenates POIsearchName with Google search string as HTML to put in the marker:
+    POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
+
+    // This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
+    POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
+    .bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+    // console.log(`bound ${i+1} to marker, placed in layer`);
+
+    // This appends POImarker to POImarkers:
+    POImarkers.push(POImarker);
+  };
+
+console.log(`...${POIhistoricLength} points of interest bound to POI markers and placed in layer. Here's one at random:`);
+console.log(POImarkers[  Math.floor(Math.round(Math.random() * POIhistoricLength)) + 1 ]);
+// This console.logs a POI at random:
+console.log(`This .CSV of points of interest is ${POIhistoricLength} records long. Here's one of them at random. (It has nothing to do with the park unit chosen above.)`);
+console.log(POIhistoricData[ Math.floor(Math.round(Math.random() * POIhistoricLength)) + 1 ]);
+
+// This turns the array called POImarkers into a Leaflet layer group:
+var history = L.layerGroup(POImarkers);
+
+// Here ends the code that turns points of interest data into a layer.
+console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+});
+
+
+
+    // 4. This creates the tile layer:
     L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
       attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
       tileSize: 512,
-      maxZoom: 22,
-      id: "satellite-v9",
+      minZoom: minZoomLevel,
+      maxZoom: maxZoomLevel,
+      id: "mapbox/satellite-v9",
       zoomOffset: -1,
       // API key
       accessToken: API_KEY
@@ -318,15 +386,36 @@ var zoom = 3
 
     // console.log("Added a tile layer, read in the API key, and set the map view.");
 
-    // var overlayMaps = {
-    //   "amenities": amenities,
-    //   "history": history
-    // };
-
-    L.control.layers(baseMaps).addTo(myMap);
-    layers: [satellite];
 
 
+    // 5. This lists base maps for Layers Control:    
+    var baseMaps = {
+      "satellite": satellite,
+      "grayed out": dark,
+      "streets": streets
+    };
+    console.log("Here's what's in baseMaps:");
+    console.log(baseMaps);
+    
+    
+
+    // 6. This lists overlay(s) for Layers Control:
+    var overlays = {
+      "history": history
+    };
+    console.log("Here's what's in overlays:");
+    console.log(overlays);
+
+
+
+    // 7. This creates a Layers Control:
+    // TRY REMOVING "overlays" FROM THE NEXT LINE AND RERUNNING IT:
+    L.control.layers(baseMaps, overlays).addTo(myMap);
+    // THEN ADDING "overlays" BACK INTO THE PREVIOUS LINE AND RERUNNING IT.
+
+
+    
+    // 8. This draws useful enhancements on the map:
     console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
     // This draws a line around the world along the 45th parallel north...
@@ -462,66 +551,6 @@ console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 console.log(`Popups bound to markers and placed on map.`);
 
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
-
-
-
-
-
-
-// IB. Import more data: points of interest dataset
-
-var POIhistoricData = "";
-// filteredPoints.csv
-// 
-// name
-// type
-// latitude
-// longitude
-
-d3.csv("resources/historicFinal.csv").then(function (POIhistoricData) {
-  POIhistoricLength = POIhistoricData.length;
-  // Cast strings to numbers for each record in historicFinal
-  POIhistoricData.forEach(function (data) {
-    data.lat = +data.Latitude;
-    data.long = +data.Longitude;
-  });
-  // look at POIData
-  console.log(`filteredPoints.CSV: ${POIhistoricLength} records (points of interest). Here's one that has nothing to do with the park unit chosen at random above:`);
-  console.log(POIhistoricData[ Math.floor(Math.round(Math.random() * POIhistoricLength)) + 1 ]);
-
-
-// This loops through the array called places and creates one marker for each place,
-  // then binds a popup containing that place's info and adds it to the map.
-
-  for (var i = 0; i < POIhistoricLength; i++) {
-    var POI = POIhistoricData[i];
-
-    POIsearchName = "";
-    POIname = "";
-    POItype = POI.type;
-    
-    POIsearchName = POI.name.replace(/ /g, '+');
-    POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
-
-    console.log(POI.name);
-    console.log(POI.type);
-    console.log(POI.latitude);
-    console.log(POI.longitude);
-    
-    L.marker([POI.latitude, POI.longitude], title = POI.name)
-    .bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>")
-    .addTo(myMap);
-    console.log(`marked ${i+1}`);
-  };
-
-console.log(`Popups bound to POI markers and placed on map.`);
-
-console.log("-_-_-_-_-_-_-_-_-_-_-_-");
-
-// this ends the function that calls points of interest data 
-});
-
-
 
 
 // this ends the outermost function
