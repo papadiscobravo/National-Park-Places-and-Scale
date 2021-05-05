@@ -391,7 +391,7 @@ console.log("-_-_-_-_-_-_-_-_-_-_-_-");
     // 5. This lists base maps for Layers Control:    
     var baseMaps = {
       "satellite": satellite,
-      "grayed out": dark,
+      "gray": dark,
       "streets": streets
     };
     console.log("Here's what's in baseMaps:");
@@ -410,7 +410,7 @@ console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
     // 7. This creates a Layers Control:
     // TRY REMOVING "overlays" FROM THE NEXT LINE AND RERUNNING IT:
-    L.control.layers(baseMaps, overlays).addTo(myMap);
+    L.control.layers(baseMaps).addTo(myMap);
     // THEN ADDING "overlays" BACK INTO THE PREVIOUS LINE AND RERUNNING IT.
 
 
@@ -542,7 +542,15 @@ console.log("-_-_-_-_-_-_-_-_-_-_-_-");
     // console.log(unit.Longitude);
     // console.log(visitors);
 
-    L.marker([unit.Latitude, unit.Longitude], title = unit.Name)
+var unitIcon = L.icon({
+  iconURL: "resources/NPSarrowhead.png",
+  iconSize: [38,95],
+  iconAnchor: [22, 94],
+  popupAnchor: [-3, -76]
+}
+);
+
+    L.marker([unit.Latitude, unit.Longitude])
     .bindPopup("<h3>" + unitName + "</h3>" + "<h4>" + unitVisitors + unitAcres + "<br>" + unitVisitorsPerAcre + "</h4>")
     .addTo(myMap);
     // console.log(`marked ${i+1}`);
