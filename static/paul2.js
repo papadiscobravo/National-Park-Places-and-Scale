@@ -1,5 +1,4 @@
-console.log("paul.js loaded");
-console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+console.log("pauls.js loaded");
 
 // IA IMPORT SOME DATA
 // import data about the 427 or so units (parks) in the NationalPark System.
@@ -52,8 +51,7 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 	// set a variable that stores how many records there are in this dataset:
 	NPSplaceCount = NPSData.length;
-	console.log(`natParksFinal.json: ${NPSplaceCount} records`);
-	// console.log(NPSData);
+	console.log(`natParksFinal.json: ${NPSplaceCount} records.  Let's start with one at random:`);
 
 	// pick a number at random to pull that record from this dataset:
 	NPSplaceRandom = Math.floor(Math.random() * NPSplaceCount);
@@ -66,15 +64,11 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
     ${Math.round(NPSData[NPSplaceRandom].Acres)} acres
     ${NPSplaceRandomLatLong} lat long
   `);
-	console.log(NPSData[NPSplaceRandom].Latitude);
-	console.log(NPSData[NPSplaceRandom].Longitude);
 
-	console.log(`starting the function to send ${NPSData[NPSplaceRandom].Name} to label div in HTML.`);
-	// print the name of the NPS unit chosen at random to the HTML
 	window.onload = function () {
 		document.getElementById('label').innerHTML = NPSData[NPSplaceRandom].Name;
 	};
-	console.log(`${NPSData[NPSplaceRandom].Name} sent to label div in HTML.`);
+	console.log(`Made the text '${NPSData[NPSplaceRandom].Name}' available to the label div in index.html`);
 
 
 	// console.log(`NPSplaceRandomLatLong[0] contains ${NPSplaceRandomLatLong[0]}`);
@@ -144,22 +138,20 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 	};
 	console.log(scaleText);
 
-	console.log("-_-_-_-_-_-_-_-_-_-_-_-");
-
 
 	// IIC. HOW MANY CONCENTRIC CIRCLES TO PLOT?
 	// We said we'd give visitors variable to change (probably with a drop-down)
 	// that specifies how many concentric circles there should be.
 	// (Just for the moment, it's choosing a value at random.)
 
-	// ******
+	// ****** Here is where we could let the website visitor choose how many
+	//        concentric circle to plot, if we have time left to do that:
 	var divisions = 4
-	// var divisions = Math.round(Math.random() * 5) + 1
-	console.log(`If there's more than one circle, there will be ${divisions} of them.`);
 	// ******
 
-	// Radius starts at zero, but, when code gets to the loop that makes concentric circles,
-	// radius will iterate by radiusIncrements up to the limit set in miles.
+
+	// Radius starts at zero so, when code gets to the loop that makes concentric circles,
+	// radius will iterate from zero by radiusIncrements up to the limit set in miles.
 	var radius = 0;
 
 	// how many miles apart is one concentric circle from the next?
@@ -176,7 +168,7 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 	// This sets min and max zoom levels for use in all map layers
 	var minZoomLevel = 3;
 	var maxZoomLevel = 22;
-	console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+
 
 	var zoom = 3
 	// Here's an if-then statement that sets zoom level based on the radius of the outermost circle, set in the variable miles.
@@ -233,12 +225,12 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 		zoom = 2;
 	};
 
-	console.log(`${diameter} mile Ø`);
+	console.log(`${diameter} mile diameter`);
 	console.log(`zoom level ${zoom}`);
 	var worldMapPxDims = 256 * (2 ** zoom);
 	var thousandPxMapMilesWide = 1000 / worldMapPxDims * 24901;
 	console.log(`At this zoom level, the world in cylindrical projection would be a square ${worldMapPxDims} pixels on each side.`);
-	console.log(`You might imagine a 1000-pixel wide view of something at the equator was representing a view of the world ${Math.round(thousandPxMapMilesWide)} miles wide.`);
+	console.log(`1000 pixels wide at zoom level ${zoom} at the equator is a roughly ${Math.round(thousandPxMapMilesWide)} mile-wide view of the world.`);
 
 	// print a statement about scale to the HTML
 	window.onload = function () {
@@ -249,17 +241,19 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 	//  zoom         approx. width in miles            the whole world would be a  
 	//  level    at equator of a 1000-pixel map     square this many pixels on a side
-	//     3                 12159                              2048
-	//     4                  6080                              4096
-	//     5                  3040                              8192
-	//     6                  1520                             16384
-	//     7                   760                             32768
-	//     8                   380                             65536
-	//     9                   190                            131072
-	//    10                    95                            262144
-	//    11                    47                            524288
-	//    12                    24               
-	//    13                    12                 
+	//     3                 12,159                              2,048
+	//     4                  6,080                              4,096
+	//     5                  3,040                              8,192
+	//     6                  1,520                             16,384
+	//     7                    760                             32,768
+	//     8                    380                             65,536
+	//     9                    190                            131,072
+	//    10                     95                            262,144
+	//    11                     47                            524,288
+	//    12                     24                          1,048,576            
+	//    13                     12                          2,097,152  
+
+	console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
 
 
@@ -319,34 +313,30 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 
 
-	// 3. Import more data: points of interest dataset
 
-	var POIhistoricData = "";
-	// filteredPoints.csv
-	// 
-	// name
-	// type
-	// latitude
-	// longitude
 
-	d3.csv("resources/historicFinal.csv").then(function (POIhistoricData) {
-		// This initializes an array that's going to contain all the Leaflet markers for this layer:
-		POImarkers = [];
+	// 3. Import more data: points of interest datasets, starting with history
 
+	//------- start of history POI loop -------------
+	var POIdataHist = "";
+	d3.csv("resources/historicFinal.csv").then(function (POIdataHist) {
+		var POImarkersHist = [];
+		var POIlengthHist = 0;
+	
 		// This counts how many records there are to turn into markers for this layer: 
-		POIhistoricLength = POIhistoricData.length;
+		POIlengthHist = POIdataHist.length;
 		// This casts strings to numbers for each record's lat long:
-		POIhistoricData.forEach(function (data) {
+		POIdataHist.forEach(function (data) {
 			data.latitude = +data.latitude;
 			data.longitude = +data.longitude;
 		});
 
-		// This loops through the POI data and creates one marker for each place,
+		// This loops through POI data and creates one marker for each place,
 		// then binds a popup containing that place's info and adds it to a layer:
-		console.log(`Starting to loop through ${POIhistoricLength} points of interest and turn them into markers...`);
+		console.log(`Starting to loop through ${POIlengthHist} points of historical interest and turn them into markers...`);
 
-		for (var i = 0; i < POIhistoricLength; i++) {
-			var POI = POIhistoricData[i];
+		for (var i = 0; i < POIlengthHist; i++) {
+			var POI = POIdataHist[i];
 
 			// This clears out anything left over in these variables from the last time the loop ran:
 			POIsearchName = ""
@@ -365,20 +355,380 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 			// console.log(`bound ${i+1} to marker, placed in layer`);
 
 			// This appends POImarker to POImarkers:
-			POImarkers.push(POImarker);
+			POImarkersHist.push(POImarker);
 		};
 
-		console.log(`...${POIhistoricLength} points of interest bound to POI markers and placed in layer. Here's one at random:`);
-		console.log(POImarkers[Math.floor(Math.round(Math.random() * POIhistoricLength)) + 1]);
-		// This console.logs a POI at random:
-		console.log(`This .CSV of points of interest is ${POIhistoricLength} records long. Here's one of them at random. (It has nothing to do with the park unit chosen above.)`);
-		console.log(POIhistoricData[Math.floor(Math.round(Math.random() * POIhistoricLength)) + 1]);
+		console.log(`...${POIlengthHist} points of interest bound to POI markers and placed in history layer. Here's one at random:`);
+		console.log(POImarkersHist[Math.floor(Math.round(Math.random() * POIlengthHist)) + 1]);
 
 		// This turns the array called POImarkers into a Leaflet layer group:
-		var history = L.layerGroup(POImarkers);
+		var Historical = L.layerGroup(POImarkersHist);
 
-		// Here ends the code that turns points of interest data into a layer.
 		console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+		//------- end of history POI loop -------------
+
+
+		//------- start of amenities POI loop -------------		
+		var POIdataAmenities = "";
+		d3.csv("resources/amenitiesFinal.csv").then(function (POIdata) {
+			POImarkers = [];
+			POIlength = 0;
+
+			// This counts how many records there are to turn into markers for this layer: 
+			POIlength = POIdata.length;
+			// This casts strings to numbers for each record's lat long:
+			POIdata.forEach(function (data) {
+				data.latitude = +data.latitude;
+				data.longitude = +data.longitude;
+			});
+
+			// This loops through POI data and creates one marker for each place,
+			// then binds a popup containing that place's info and adds it to a layer:
+			console.log(`Starting to loop through ${POIlength} amenity points of interest and turn them into markers...`);
+
+			for (var i = 0; i < POIlength; i++) {
+				var POI = POIdata[i];
+
+				// This clears out anything left over in these variables from the last time the loop ran:
+				POIsearchName = ""
+				POIname = "";
+				POItype = POI.type;
+
+				// This makes a new variable out of the POI's name and replaces all the spaces in it with plus signs for Google (next):
+				POIsearchName = POI.name.replace(/ /g, '+');
+
+				// This concatenates POIsearchName with Google search string as HTML to put in the marker:
+				POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
+
+				// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
+				POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
+					.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+				// console.log(`bound ${i+1} to marker, placed in layer`);
+
+				// This appends POImarker to POImarkers:
+				POImarkers.push(POImarker);
+			};
+
+			console.log(`...${POIlength} points of interest bound to POI markers and placed in amenities layer. Here's one at random:`);
+			console.log(POImarkers[Math.floor(Math.round(Math.random() * POIlength)) + 1]);
+
+			// This turns the array called POImarkers into a Leaflet layer group:
+			var Amenities = L.layerGroup(POImarkers);
+
+			console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+			//------- end of amenities POI loop -------------
+
+
+			//------- start of attractions POI loop -------------
+			var POIdataAttractions = "";
+			d3.csv("resources/attractionsFinal.csv").then(function (POIdata) {
+				POImarkers = [];
+				POIlength = 0;
+	
+				// This counts how many records there are to turn into markers for this layer: 
+				POIlength = POIdata.length;
+				// This casts strings to numbers for each record's lat long:
+				POIdata.forEach(function (data) {
+					data.latitude = +data.latitude;
+					data.longitude = +data.longitude;
+				});
+
+				// This loops through POI data and creates one marker for each place,
+				// then binds a popup containing that place's info and adds it to a layer:
+				console.log(`Starting to loop through ${POIlength} attraction points of interest and turn them into markers...`);
+
+				for (var i = 0; i < POIlength; i++) {
+					var POI = POIdata[i];
+
+					// This clears out anything left over in these variables from the last time the loop ran:
+					POIsearchName = ""
+					POIname = "";
+					POItype = POI.type;
+
+					// This makes a new variable out of the POI's name and replaces all the spaces in it with plus signs for Google (next):
+					POIsearchName = POI.name.replace(/ /g, '+');
+
+					// This concatenates POIsearchName with Google search string as HTML to put in the marker:
+					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
+
+					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
+					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
+						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+					// console.log(`bound ${i+1} to marker, placed in layer`);
+
+					// This appends POImarker to POImarkers:
+					POImarkers.push(POImarker);
+				};
+
+				console.log(`...${POIlength} points of interest bound to POI markers and placed in attractions layer. Here's one at random:`);
+				console.log(POImarkers[Math.floor(Math.round(Math.random() * POIlength)) + 1]);
+
+				// This turns the array called POImarkers into a Leaflet layer group:
+				var Attractions = L.layerGroup(POImarkers);
+
+				console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+			//------- end of attractions POI loop -------------
+
+
+			//------- start of boating POI loop -------------
+			var POIdataBoating = "";
+			d3.csv("resources/boatingFinal.csv").then(function (POIdata) {
+				POImarkers = [];
+				POIlength = 0;
+
+				// This counts how many records there are to turn into markers for this layer: 
+				POIlength = POIdata.length;
+				// This casts strings to numbers for each record's lat long:
+				POIdata.forEach(function (data) {
+					data.latitude = +data.latitude;
+					data.longitude = +data.longitude;
+				});
+
+				// This loops through POI data and creates one marker for each place,
+				// then binds a popup containing that place's info and adds it to a layer:
+				console.log(`Starting to loop through ${POIlength} points of boating interest and turn them into markers...`);
+
+				for (var i = 0; i < POIlength; i++) {
+					var POI = POIdata[i];
+
+					// This clears out anything left over in these variables from the last time the loop ran:
+					POIsearchName = ""
+					POIname = "";
+					POItype = POI.type;
+
+					// This makes a new variable out of the POI's name and replaces all the spaces in it with plus signs for Google (next):
+					POIsearchName = POI.name.replace(/ /g, '+');
+
+					// This concatenates POIsearchName with Google search string as HTML to put in the marker:
+					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
+
+					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
+					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
+						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+					// console.log(`bound ${i+1} to marker, placed in layer`);
+
+					// This appends POImarker to POImarkers:
+					POImarkers.push(POImarker);
+				};
+
+				console.log(`...${POIlength} points of interest bound to POI markers and placed in boating layer. Here's one at random:`);
+				console.log(POImarkers[Math.floor(Math.round(Math.random() * POIlength)) + 1]);
+
+				// This turns the array called POImarkers into a Leaflet layer group:
+				var Boating = L.layerGroup(POImarkers);
+
+				console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+			//------- end of boating POI loop -------------
+
+
+
+			//------- start of camping POI loop -------------
+			var POIdataCamping = "";
+			d3.csv("resources/campingFinal.csv").then(function (POIdata) {
+				// This initializes an array that's going to contain all the Leaflet markers for this layer:
+				POImarkers = [];
+				POIlength = 0;
+
+				// This counts how many records there are to turn into markers for this layer: 
+				POIlength = POIdata.length;
+				// This casts strings to numbers for each record's lat long:
+				POIdata.forEach(function (data) {
+					data.latitude = +data.latitude;
+					data.longitude = +data.longitude;
+				});
+
+				// This loops through POI data and creates one marker for each place,
+				// then binds a popup containing that place's info and adds it to a layer:
+				console.log(`Starting to loop through ${POIlength} points of camping interest and turn them into markers...`);
+
+				for (var i = 0; i < POIlength; i++) {
+					var POI = POIdata[i];
+
+					// This clears out anything left over in these variables from the last time the loop ran:
+					POIsearchName = ""
+					POIname = "";
+					POItype = POI.type;
+
+					// This makes a new variable out of the POI's name and replaces all the spaces in it with plus signs for Google (next):
+					POIsearchName = POI.name.replace(/ /g, '+');
+
+					// This concatenates POIsearchName with Google search string as HTML to put in the marker:
+					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
+
+					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
+					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
+						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+					// console.log(`bound ${i+1} to marker, placed in layer`);
+
+					// This appends POImarker to POImarkers:
+					POImarkers.push(POImarker);
+				};
+
+				console.log(`...${POIlength} points of interest bound to POI markers and placed in camping layer. Here's one at random:`);
+				console.log(POImarkers[Math.floor(Math.round(Math.random() * POIlength)) + 1]);
+
+				// This turns the array called POImarkers into a Leaflet layer group:
+				var Camping = L.layerGroup(POImarkers);
+
+				console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+			//------- end of camping POI loop -------------
+
+
+			//------- start of emergency POI loop -------------
+			var POIdataEmergency = "";
+			d3.csv("resources/emergencyFinal.csv").then(function (POIdata) {
+				// This initializes an array that's going to contain all the Leaflet markers for this layer:
+				POImarkers = [];
+				POIlength = 0;
+
+				// This counts how many records there are to turn into markers for this layer: 
+				POIlength = POIdata.length;
+				// This casts strings to numbers for each record's lat long:
+				POIdata.forEach(function (data) {
+					data.latitude = +data.latitude;
+					data.longitude = +data.longitude;
+				});
+
+				// This loops through POI data and creates one marker for each place,
+				// then binds a popup containing that place's info and adds it to a layer:
+				console.log(`Starting to loop through ${POIlength} emergency-related points of interest and turn them into markers...`);
+
+				for (var i = 0; i < POIlength; i++) {
+					var POI = POIdata[i];
+
+					// This clears out anything left over in these variables from the last time the loop ran:
+					POIsearchName = ""
+					POIname = "";
+					POItype = POI.type;
+
+					// This makes a new variable out of the POI's name and replaces all the spaces in it with plus signs for Google (next):
+					POIsearchName = POI.name.replace(/ /g, '+');
+
+					// This concatenates POIsearchName with Google search string as HTML to put in the marker:
+					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
+
+					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
+					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
+						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+					// console.log(`bound ${i+1} to marker, placed in layer`);
+
+					// This appends POImarker to POImarkers:
+					POImarkers.push(POImarker);
+				};
+
+				console.log(`...${POIlength} points of interest bound to POI markers and placed in emergency layer. Here's one at random:`);
+				console.log(POImarkers[Math.floor(Math.round(Math.random() * POIlength)) + 1]);
+
+				// This turns the array called POImarkers into a Leaflet layer group:
+				var Emergency = L.layerGroup(POImarkers);
+
+				console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+			//------- end of emergency POI loop -------------
+
+
+			//------- start of transportation POI loop -------------
+			var POIdataTransportation = "";
+			d3.csv("resources/parkingTransportationFinal.csv").then(function (POIdata) {
+				// This initializes an array that's going to contain all the Leaflet markers for this layer:
+				POImarkers = [];
+				POIlength = 0;
+
+				// This counts how many records there are to turn into markers for this layer: 
+				POIlength = POIdata.length;
+				// This casts strings to numbers for each record's lat long:
+				POIdata.forEach(function (data) {
+					data.latitude = +data.latitude;
+					data.longitude = +data.longitude;
+				});
+
+				// This loops through POI data and creates one marker for each place,
+				// then binds a popup containing that place's info and adds it to a layer:
+				console.log(`Starting to loop through ${POIlength} points of transportation interest and turn them into markers...`);
+
+				for (var i = 0; i < POIlength; i++) {
+					var POI = POIdata[i];
+
+					// This clears out anything left over in these variables from the last time the loop ran:
+					POIsearchName = ""
+					POIname = "";
+					POItype = POI.type;
+
+					// This makes a new variable out of the POI's name and replaces all the spaces in it with plus signs for Google (next):
+					POIsearchName = POI.name.replace(/ /g, '+');
+
+					// This concatenates POIsearchName with Google search string as HTML to put in the marker:
+					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
+
+					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
+					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
+						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+					// console.log(`bound ${i+1} to marker, placed in layer`);
+
+					// This appends POImarker to POImarkers:
+					POImarkers.push(POImarker);
+				};
+
+				console.log(`...${POIlength} points of interest bound to POI markers and placed in transportation layer. Here's one at random:`);
+				console.log(POImarkers[Math.floor(Math.round(Math.random() * POIlength)) + 1]);
+
+				// This turns the array called POImarkers into a Leaflet layer group:
+				var Transportation = L.layerGroup(POImarkers);
+
+				console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+			//------- end of transportation POI loop -------------
+
+
+
+			//------- start of sports POI loop -------------
+			var POIdataSports = "";
+			d3.csv("resources/sportsActivitiesFinal.csv").then(function (POIdata) {
+				// This initializes an array that's going to contain all the Leaflet markers for this layer:
+				POImarkers = [];
+				POIlength = 0;
+
+				// This counts how many records there are to turn into markers for this layer: 
+				POIlength = POIdata.length;
+				// This casts strings to numbers for each record's lat long:
+				POIdata.forEach(function (data) {
+					data.latitude = +data.latitude;
+					data.longitude = +data.longitude;
+				});
+
+				// This loops through POI data and creates one marker for each place,
+				// then binds a popup containing that place's info and adds it to a layer:
+				console.log(`Starting to loop through ${POIlength} points of athletic interest and turn them into markers...`);
+
+				for (var i = 0; i < POIlength; i++) {
+					var POI = POIdata[i];
+
+					// This clears out anything left over in these variables from the last time the loop ran:
+					POIsearchName = ""
+					POIname = "";
+					POItype = POI.type;
+
+					// This makes a new variable out of the POI's name and replaces all the spaces in it with plus signs for Google (next):
+					POIsearchName = POI.name.replace(/ /g, '+');
+
+					// This concatenates POIsearchName with Google search string as HTML to put in the marker:
+					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
+
+					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
+					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
+						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+					// console.log(`bound ${i+1} to marker, placed in layer`);
+
+					// This appends POImarker to POImarkers:
+					POImarkers.push(POImarker);
+				};
+
+				console.log(`...${POIlength} points of interest bound to POI markers and placed in transportation layer. Here's one at random:`);
+				console.log(POImarkers[Math.floor(Math.round(Math.random() * POIlength)) + 1]);
+
+				// This turns the array called POImarkers into a Leaflet layer group:
+				var Sports = L.layerGroup(POImarkers);
+
+				console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+			//------- end of sports POI loop -------------
 
 
 
@@ -402,7 +752,14 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 		// 6. This lists overlay(s) for Layers Control:
 		var overlays = {
-			"history": history
+			"amenities": Amenities,
+			"athletics": Sports,
+			"attractions": Attractions,
+			"boating": Boating,
+			"camping": Camping,
+			"emergency": Emergency,
+			"history": Historical,
+			"transportation": Transportation
 		};
 		console.log("Here's what's in overlays:");
 		console.log(overlays);
@@ -483,7 +840,7 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 	// draw concentric circles:
 	if (diameter > 0) {
 
-		// console.log(`Started running a loop to draw concentric circles out to ${miles} miles around the center point.s`);
+		console.log(`Started running a loop to draw concentric circles out to ${miles} miles around the center point.s`);
 
 		for (radius = 0 + radiusIncrements; radius <= miles;) {
 
@@ -499,7 +856,7 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 			// console.log(`color: ${Color} opacity: ${opacity}`);
 			radius = radius + radiusIncrements;
 		};
-		// console.log(`Finished running the concentric circles loop.`);
+		console.log(`Finished running the concentric circles loop.`);
 	};
 
 	console.log("-_-_-_-_-_-_-_-_-_-_-_-");
@@ -513,7 +870,7 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 	// This loops through the array called places and creates one marker for each place,
 	// then binds a popup containing that place's info and adds it to the map.
-
+	console.log(`Started binding popups to markers and placing them on the map for each NPS unit...`);
 	for (var i = 0; i < NPSplaceCount; i++) {
 		var unit = NPSData[i];
 
@@ -532,7 +889,7 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 			unitVisitors = `${unit.att_Average} visitors each year<br>`;
 			unitVisitorsPerAcre = `${Math.round((unit.att_Average / unit.Acres) * 10) / 10} visitors per acre each year`;
 		}
-		else if (unit.att_Average = 0) {
+		else {
 			unitVisitors = "attendance data not available";
 			unitVisitorsPerAcre = "";
         };
@@ -552,10 +909,15 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 		// console.log(`marked ${i+1}`);
 	};
 
-	console.log(`Popups bound to markers and placed on map.`);
-
+	console.log(`...popups bound to markers and placed on map for each NPS unit.`);
 	console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 
 
-	// this ends the outermost function
+	});
+	});
+	});
+	});
+	});
+	});
+	});
 });
