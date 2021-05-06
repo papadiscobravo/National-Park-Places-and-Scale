@@ -34,6 +34,8 @@ This one-page dashboard shows a map of places in the U.S. National Park System.
 
 1. Import data from SQLite via Flask: &nbsp;NPSplacesAndAttendance table and POIdata table. -Ciera
 
+*** User needs to input their own username and password used in their local PgAdmin4 SQL Database and for their Jupyter Notebook in a config.py file. The user also needs to run the `table_schemata.sql` into their own SQL Database in order to generate the 10 tables.
+
 1. Plot systemwide map: &nbsp;pick a random place, draw the map centered on that place, bind place markers of 423 units (parks) to the map, draw concentric circles aroud the place the map is centered on, bind point-of-interest markers to the map. -Paul
 
 1. Plot per-park attendance that updates for each unit (park) clicked on. -Emerson
