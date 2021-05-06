@@ -1,64 +1,65 @@
-// START OF ACTIVITIES AND SPORTS------------------------------------------------------------------------------------------
-var POIactivitiesData = "";
-// sportsActivitiesFinal.csv
-// 
-// name
-// type
-// latitude
-// longitude
 
-d3.csv("resources/sportsActivitiesFinal.csv").then(function (POIactivities) {
-  // This initializes an array that's going to contain all the Leaflet markers for this layer:
-  POImarkers = [];
-  
-  // This counts how many records there are to turn into markers for this layer: 
-  POIactivitiesLength = POIactivitiesData.length;
-  // This casts strings to numbers for each record's lat long:
-  POIactivitiesData.forEach(function (data) {
-    data.latitude = +data.latitude;
-    data.longitude = +data.longitude;
-  });
+  // START OF ACTIVITIES AND SPORTS------------------------------------------------------------------------------------------
+  var POIactivitiesData = "";
+  // sportsActivitiesFinal.csv
+  // 
+  // name
+  // type
+  // latitude
+  // longitude
 
-  // This loops through the POI data and creates one marker for each place,
-  // then binds a popup containing that place's info and adds it to a layer:
-  console.log(`Starting to loop through ${POIactivitiesLength} points of interest and turn them into markers...`);
-  
-  for (var i = 0; i < POIactivitiesLength; i++) {
-    var POI = POIactivitiesData[i];
-
-    // This clears out anything left over in these variables from the last time the loop ran:
-    POIsearchName = ""
-    POIname = "";
-    POItype = POI.type;
+  d3.csv("resources/sportsActivitiesFinal.csv").then(function (POIactivities) {
+    // This initializes an array that's going to contain all the Leaflet markers for this layer:
+    POImarkers = [];
     
-    // This makes a new variable out of the POI's name and replaces all the spaces in it with plus signs for Google (next):
-    POIsearchName = POI.name.replace(/ /g, '+');
+    // This counts how many records there are to turn into markers for this layer: 
+    POIactivitiesLength = POIactivitiesData.length;
+    // This casts strings to numbers for each record's lat long:
+    POIactivitiesData.forEach(function (data) {
+      data.latitude = +data.latitude;
+      data.longitude = +data.longitude;
+    });
 
-    // This concatenates POIsearchName with Google search string as HTML to put in the marker:
-    POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
+    // This loops through the POI data and creates one marker for each place,
+    // then binds a popup containing that place's info and adds it to a layer:
+    console.log(`Starting to loop through ${POIactivitiesLength} points of interest and turn them into markers...`);
+    
+    for (var i = 0; i < POIactivitiesLength; i++) {
+      var POI = POIactivitiesData[i];
 
-    // This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
-    POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
-    .bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
-    // console.log(`bound ${i+1} to marker, placed in layer`);
+      // This clears out anything left over in these variables from the last time the loop ran:
+      POIsearchName = ""
+      POIname = "";
+      POItype = POI.type;
+      
+      // This makes a new variable out of the POI's name and replaces all the spaces in it with plus signs for Google (next):
+      POIsearchName = POI.name.replace(/ /g, '+');
 
-    // This appends POImarker to POImarkers:
-    POImarkers.push(POImarker);
-  };
+      // This concatenates POIsearchName with Google search string as HTML to put in the marker:
+      POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
 
-console.log(`...${POIactivitiesLength} points of interest bound to POI markers and placed in layer. Here's one at random:`);
-console.log(POImarkers[  Math.floor(Math.round(Math.random() * POIactivitiesLength)) + 1 ]);
-// This console.logs a POI at random:
-console.log(`This .CSV of points of interest is ${POIactivitiesLength} records long. Here's one of them at random. (It has nothing to do with the park unit chosen above.)`);
-console.log(POIactivitiesData[ Math.floor(Math.round(Math.random() * POIactivitiesLength)) + 1 ]);
+      // This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
+      POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
+      .bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+      // console.log(`bound ${i+1} to marker, placed in layer`);
 
-// This turns the array called POImarkers into a Leaflet layer group:
-var history = L.layerGroup(POImarkers);
+      // This appends POImarker to POImarkers:
+      POImarkers.push(POImarker);
+    };
 
-// Here ends the code that turns points of interest data into a layer.
-console.log("-_-_-_-_-_-_-_-_-_-_-_-");
-});
-// END OF ACTIVITIES & SPORTS -----------------------------------------------------------------------------------------------
+  console.log(`...${POIactivitiesLength} points of interest bound to POI markers and placed in layer. Here's one at random:`);
+  console.log(POImarkers[  Math.floor(Math.round(Math.random() * POIactivitiesLength)) + 1 ]);
+  // This console.logs a POI at random:
+  console.log(`This .CSV of points of interest is ${POIactivitiesLength} records long. Here's one of them at random. (It has nothing to do with the park unit chosen above.)`);
+  console.log(POIactivitiesData[ Math.floor(Math.round(Math.random() * POIactivitiesLength)) + 1 ]);
+
+  // This turns the array called POImarkers into a Leaflet layer group:
+  var Activities = L.layerGroup(POImarkers);
+
+  // Here ends the code that turns points of interest data into a layer.
+  console.log("-_-_-_-_-_-_-_-_-_-_-_-");
+  });
+  // END OF ACTIVITIES & SPORTS function ------------------------------------------------------------------------------------
 
 
 // START OF AMENITIES -------------------------------------------------------------------------------------------------------
@@ -116,7 +117,7 @@ console.log(`This .CSV of points of interest is ${POIactivitiesLength} records l
 console.log(POIamenitiesData[ Math.floor(Math.round(Math.random() * POIamenitiesLength)) + 1 ]);
 
 // This turns the array called POImarkers into a Leaflet layer group:
-var history = L.layerGroup(POImarkers);
+var Amenities = L.layerGroup(POImarkers);
 
 // Here ends the code that turns points of interest data into a layer.
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
@@ -179,7 +180,7 @@ console.log(`This .CSV of points of interest is ${POIattractionsLength} records 
 console.log(POIattractionsData[ Math.floor(Math.round(Math.random() * POIattractionsLength)) + 1 ]);
 
 // This turns the array called POImarkers into a Leaflet layer group:
-var history = L.layerGroup(POImarkers);
+var Attractions = L.layerGroup(POImarkers);
 
 // Here ends the code that turns points of interest data into a layer.
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
@@ -242,7 +243,7 @@ console.log(`This .CSV of points of interest is ${POIboatingLength} records long
 console.log(POIboatingData[ Math.floor(Math.round(Math.random() * POIboatingLength)) + 1 ]);
 
 // This turns the array called POImarkers into a Leaflet layer group:
-var history = L.layerGroup(POImarkers);
+var Boating = L.layerGroup(POImarkers);
 
 // Here ends the code that turns points of interest data into a layer.
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
@@ -305,7 +306,7 @@ console.log(`This .CSV of points of interest is ${POIcampingLength} records long
 console.log(POIcampingData[ Math.floor(Math.round(Math.random() * POIcampingLength)) + 1 ]);
 
 // This turns the array called POImarkers into a Leaflet layer group:
-var history = L.layerGroup(POImarkers);
+var Camping = L.layerGroup(POImarkers);
 
 // Here ends the code that turns points of interest data into a layer.
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
@@ -368,7 +369,7 @@ console.log(`This .CSV of points of interest is ${POIemergencyLength} records lo
 console.log(POIemergencyData[ Math.floor(Math.round(Math.random() * POIemergencyLength)) + 1 ]);
 
 // This turns the array called POImarkers into a Leaflet layer group:
-var history = L.layerGroup(POImarkers);
+var Emergency = L.layerGroup(POImarkers);
 
 // Here ends the code that turns points of interest data into a layer.
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
@@ -431,7 +432,7 @@ console.log(`This .CSV of points of interest is ${POIhistoricLength} records lon
 console.log(POIhistoricData[ Math.floor(Math.round(Math.random() * POIhistoricLength)) + 1 ]);
 
 // This turns the array called POImarkers into a Leaflet layer group:
-var history = L.layerGroup(POImarkers);
+var Historic = L.layerGroup(POImarkers);
 
 // Here ends the code that turns points of interest data into a layer.
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
@@ -494,41 +495,41 @@ console.log(`This .CSV of points of interest is ${POItransportationLength} recor
 console.log(POItransportationData[ Math.floor(Math.round(Math.random() * POItransportationLength)) + 1 ]);
 
 // This turns the array called POImarkers into a Leaflet layer group:
-var history = L.layerGroup(POImarkers);
+var Transportation = L.layerGroup(POImarkers);
 
 // Here ends the code that turns points of interest data into a layer.
 console.log("-_-_-_-_-_-_-_-_-_-_-_-");
 });
 // END OF PARKING & TRANSPORTATION -----------------------------------------------------------------------------------------------
+// var layers = [];
 
-
-// THE CODE BELOW CAME FROM THE CITIBIKE ACTIVITY
-// Create the map with our layers
-var map = L.map("map-id", {
-    center: [40.73, -74.0059],
-    zoom: 12,
-    layers: [
-      layers.Activities,
-      layers.Amenities,
-      layers.Attractions,
-      layers.Boating,
-      layers.Camping,
-      layers.Emergency,
-      layers.Historic,
-      layers.Transportation
-    ]
-  });
+// // THE CODE BELOW CAME FROM THE CITIBIKE ACTIVITY
+// // Create the map with our layers
+// var map = L.map("map-id", {
+//     center: [40.73, -74.0059],
+//     zoom: 12,
+//     // layers: [
+//     //   layers.Activities,
+//     //   layers.Amenities,
+//     //   layers.Attractions,
+//     //   layers.Boating,
+//     //   layers.Camping,
+//     //   layers.Emergency,
+//     //   layers.Historic,
+//     //   layers.Transportation
+//     // ]
+//   });
 
 // Toggler control
 var overlays = {
-    "Activities & Sports": layers.Activities,
-    "Amenities": layers.Amenities,
-    "Attractions & Geographic Features": layers.Attractions,
-    "Boating & Watercraft": layers.Boating,
-    "Camping": layers.Camping,
-    "Emergency Services": layers.Emergency,
-    "Historic Sites": layers.Historic,
-    "Parking & Transportation": layers.Transportation
+    "Activities & Sports": Activities,
+    "Amenities": Amenities,
+    "Attractions & Geographic Features": Attractions,
+    "Boating & Watercraft": Boating,
+    "Camping": Camping,
+    "Emergency Services": Emergency,
+    "Historic Sites": Historic,
+    "Parking & Transportation": Transportation
   };
   
   // Create a control for our layers, add our overlay layers to it
