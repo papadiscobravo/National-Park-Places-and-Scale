@@ -1,21 +1,38 @@
 console.log("app.js loaded");
 
+// EVENT HANDLERS
+// 1. Choose circle diameter, whether
+//    drop-down box of just a couple choices (1, 4, and 10 miles) or 
+//    let the website visitor enter a number.
+
+// 2. Choose an NPS unit, whether by
+//    clicking on a nearby NPS unit (look for the arrowhead!) or
+//    choosing from a drop-down of 418.
+
+// 3. Put the same size concentric circles elsewhere, probably by
+//    clicking elsewhere on the map.
+
+
+
 function InitDashboard() {
 
     console.log(`InitDashboard()`); 
     // Load the initial dataset
     // Get latitude and longitude
 
-    // These names use "draw" for something that happens on page load, and "update" for something that happens on mouse click:
+    // These names use "draw" for something that happens on page load,
+    // and "update" for something that happens on mouse click:
     DrawLatitudeByParkArea()
     DrawParkAreaByLongitude()
+    DrawBarGraph()
+    DrawPointsOfInterest()
     UpdateMapAndText(selectedParkID)
     UpdateBarGraph(selectedParkID)
-    DrawPointsOfInterest()
-;
+ 
 }
 
 // This should live in paul.js
+// ParkID here is an input that the function receives.
 function DrawMapAndText(ParkID) {
 
     console.log(`DrawMapAndText(${ParkID})`); 
