@@ -825,10 +825,10 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 	// IIE. PICK COLORS AND PLOT CIRCLES ON THE MAP
 	// Color is the color of the *boundary* of the concentric circle.
-	Color = "#ffffff";
+	Color = "#eeeeee";
 
 	// fillColor is the color of the *interior* of the concentric circle.
-	var fillColor = Color;
+	var fillColor = "#ffffff";
 
 	// If we have allow multiple map views more than satellite view,
 	// we'll want to test and determine different optimal opacities for each view
@@ -886,7 +886,7 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 		unitAcres = `${Math.round((unit.Acres) * 10) / 10} acres`;
 
 		if (unit.att_Average > 0) {
-			unitVisitors = `${unit.att_Average} visitors each year<br>`;
+			unitVisitors = `${unit.att_Average} visitors each year`;
 			unitVisitorsPerAcre = `${Math.round((unit.att_Average / unit.Acres) * 10) / 10} visitors per acre each year`;
 		}
 		else {
@@ -904,7 +904,7 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 
 		L.marker([unit.Latitude, unit.Longitude], title = unit.Name, {icon: NPSunitIcon})
-			.bindPopup("<h3>" + unitName + "</h3>" + "<h4>" + unitVisitors + unitAcres + "<br>" + unitVisitorsPerAcre + "</h4>")
+			.bindPopup("<h4>" + unitName + "</h4>" + "<p>" + unitVisitors + "<br>" + unitAcres + "<br>" + unitVisitorsPerAcre + "</p>")
 			.addTo(myMap);
 		// console.log(`marked ${i+1}`);
 	};
