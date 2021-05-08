@@ -1,22 +1,32 @@
+console.log("emerson.js loaded");
+
 function buildCharts(parkID) {
   d3.csv("resources/natParksFinal.csv").then((data) => {
     parkInfo = data[parkID]
-    var xvalues = [parkInfo["att_2011"], parkInfo["att_2012"], parkInfo["att_2013"], parkInfo["att_2014"], parkInfo["att_2015"], parkInfo["att_2016"], parkInfo["att_2017"], parkInfo["att_2018"], parkInfo["att_2019"], parkInfo["att_2020"]]
-    var yvalues = ["2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019",]
+    console.log(`parkInfo for parkID ${parkID} contains`);
+    console.log(parkInfo);
+    var xvalues = [parkInfo["att_2011"], parkInfo["att_2012"], parkInfo["att_2013"], parkInfo["att_2014"], parkInfo["att_2015"], parkInfo["att_2016"], parkInfo["att_2017"], parkInfo["att_2018"], parkInfo["att_2019"], parkInfo["att_2020"]];
+    var yvalues = ["2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"];
+
+    console.log("y values:");
+    console.log(yvalues);
+    console.log("x values:");
+    console.log(xvalues);
+    
     var data1 = [{
-      x: xvalues,
-      y: yvalues,
+      y: xvalues,
+      x: yvalues,
       // text: otu_labels.slice(0, 10).reverse(),
       type: "bar",
-      orientation: "h"
+      orientation: "v"
     }];
 
     var layout1 = {
-      title: "Year vs Attendance",
-      xaxis: {
-        title: "Attendance"
-      },
+      title: `${parkInfo.Name}<br>Recreation Visits per Year`,
       yaxis: {
+        title: "Recreation Visits"
+      },
+      xaxis: {
         categoryorder: "Year"
       }
     };
@@ -44,6 +54,7 @@ function buildCharts(parkID) {
     var data = [trace1, trace2];
 
     Plotly.newPlot('scatter', data);
+    console.log("asked Plotly to make a scatterplot");
 
 
   });
@@ -72,3 +83,4 @@ function initDashboard() {
 
 initDashboard();
 
+console.log("emerson.js finished");

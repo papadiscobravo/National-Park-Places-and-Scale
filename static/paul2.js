@@ -1,7 +1,8 @@
 console.log("pauls.js loaded");
 
 // IA IMPORT SOME DATA
-// import data about the 427 or so units (parks) in the NationalPark System.
+// import data about the 418 units ('parks') in the National Park System.
+// They're not all parks--some are National Monuments, Historic Sites, Scenic Rivers, and so forth.
 
 var NPSData = {};
 // natParksFinal.csv contains
@@ -58,6 +59,7 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 	// retrieve the lat and long from this record and put it into an array:
 	NPSplaceRandomLatLong = [NPSData[NPSplaceRandom].Latitude, NPSData[NPSplaceRandom].Longitude];
+	parkID = NPSplaceRandom;
 
 	console.log(`${NPSplaceRandom} ${NPSData[NPSplaceRandom].Code}
     ${NPSData[NPSplaceRandom].Name}
@@ -77,7 +79,6 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 	// pass the lat long coordinates of the place chosen at random from NSP places into a new variable, centerLatLong, for mapmaking.
 	centerLatLong = NPSplaceRandomLatLong;
-
 
 	// II. CONCENTRIC CIRCLES
 	// IIA. HOW BIG?
@@ -825,10 +826,10 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 	// IIE. PICK COLORS AND PLOT CIRCLES ON THE MAP
 	// Color is the color of the *boundary* of the concentric circle.
-	Color = "#ffffff";
+	Color = "#eeeeee";
 
 	// fillColor is the color of the *interior* of the concentric circle.
-	var fillColor = Color;
+	var fillColor = "#ffffff";
 
 	// If we have allow multiple map views more than satellite view,
 	// we'll want to test and determine different optimal opacities for each view
@@ -886,8 +887,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 		unitAcres = `${Math.round((unit.Acres) * 10) / 10} acres`;
 
 		if (unit.att_Average > 0) {
-			unitVisitors = `${unit.att_Average} visitors each year<br>`;
-			unitVisitorsPerAcre = `${Math.round((unit.att_Average / unit.Acres) * 10) / 10} visitors per acre each year`;
+			unitVisitors = `${unit.att_Average} recreation visits each year`;
+			unitVisitorsPerAcre = `${Math.round((unit.att_Average / unit.Acres) * 10) / 10} recreation visits per acre each year`;
 		}
 		else {
 			unitVisitors = "attendance data not available";
@@ -896,15 +897,18 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
         
         // https://leafletjs.com/examples/custom-icons/
         var NPSunitIcon = L.icon({
-            iconUrl: "resources/NPS-arrowhead.png",
+            iconUrl: "resources/NPS-arrowhead-silhouette.png",
             iconSize: [38, 95],
             iconAnchor: [22, 94],
-            popupAnchor: [-3, -76]            
+			popupAnchor: [-3, -76],
+			shadowUrl: "resources/NPS-arrowhead-shadow.png",
+			shadowSize: [68, 95],
+			shadowAnchor: [22, 94]
         });
 
 
 		L.marker([unit.Latitude, unit.Longitude], title = unit.Name, {icon: NPSunitIcon})
-			.bindPopup("<h3>" + unitName + "</h3>" + "<h4>" + unitVisitors + unitAcres + "<br>" + unitVisitorsPerAcre + "</h4>")
+			.bindPopup("<h4>" + unitName + "</h4>" + "<p>" + unitVisitors + "<br>" + unitAcres + "<br>" + unitVisitorsPerAcre + "</p>")
 			.addTo(myMap);
 		// console.log(`marked ${i+1}`);
 	};
@@ -920,4 +924,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 	});
 	});
 	});
+
+	buildCharts(parkID);
+	// Emerson's function to build a new bar chart for each NPS unit
+
 });

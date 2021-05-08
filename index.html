@@ -42,42 +42,57 @@
   <div id="scale"><h3></h3></div>
 
   <!-- the div where the unit's attendance data goes-->
-  <div id="table"></div>
+  <div id="bar"></div>
+
+  <!-- the div where the system-wide scatter plot data goes-->
+  <div id="scatter"></div>
 
   <!-- the div where information about sources goes-->
   <div id="footnote">
     <p><b>notes</b><br>
-    <i>Visitors per year</i> is the mean of 2011-2020 annual attendance figures as found in [source].</p>
-    <p><i>Area</i> began as a value from [source] autopopulated by ESRI software based on <a
+    The list of <i>units</i> in the National Park Service system (parks, but also national monuments, scenic rivers, and so forth) came from Franklin Webber's <a href="https://github.com/learn-chef/national-parks-java/blob/master/national-parks.json" target="_blank">GitHub repo</a>.<br>        
+    <i>Visitors per year</i> is the mean of 2011-2020 annual attendance figures according to the <a href="https://irma.nps.gov/STATS/SSRSReports/National%20Reports/Annual%20Visitation%20By%20Park%20(1979%20-%20Last%20Calendar%20Year)" target="_blank">National Park Service</a>.
+    <i>Points of interest</i> came from the National Park Service's <a href="https://public-nps.opendata.arcgis.com/datasets/nps-points-of-interest-pois-geographic-coordinate-system-1?geometry=152.395%2C-21.130%2C-177.371%2C70.669" target="_blank">ArcGIS geocoordinate system</a>.
+    And <i>landmass</i>, or <i>area</i>, figures for each NPS unit came from the National Park Service's <a href="https://public-nps.opendata.arcgis.com/datasets/nps-boundary-1/data?geometry=173.303%2C-20.478%2C161.701%2C70.899" target="_blank">nps boundary</a> ArcGIS dataset.
+    </p>
+
+      <p><i>Area</i> began as a value autopopulated by ESRI software based on <a
         href="https://en.wikipedia.org/wiki/Web_Mercator_projection" target="_blank">WGS 1984 Web</a> <a
-        href="https://imgs.xkcd.com/comics/mercator_projection.png" target="_blank">Mercator</a>.<br>
-    <p>Special thanks to Matthew Rowbotham of the <a href="https://northcountrytrail.org/" target="_blank">North Country
+        href="https://imgs.xkcd.com/comics/mercator_projection.png" target="_blank">Mercator</a>. Very special thanks to Matthew Rowbotham of the <a href="https://northcountrytrail.org/" target="_blank">North Country
         Trail Association</a> for converting these to acres in <a href="https://en.wikipedia.org/wiki/Albers_projection"
         target="_blank">North America Albers Equal Area Conic</a> projection. A spot-check of results show 555.200203
-      acres for <a href="https://www.nps.gov/muwo/index.htm" target="_blank"></a>Muir Woods National Monument</a> by
-      these calculations, which <a href="https://en.wikipedia.org/wiki/Muir_Woods_National_Monument"
+        acres for <a href="https://www.nps.gov/muwo/index.htm" target="_blank"></a>Muir Woods National Monument</a> by
+        these calculations, which <a href="https://en.wikipedia.org/wiki/Muir_Woods_National_Monument"
         target="_blank"></a>Wikipedia</a> lists as 554 acres.</p>
-    <p>Thanks to Roger Johnson (Chief Cartographer, Washington Support Office Land Resources Division, Fort Collins
+    <p>Thanks also to Roger Johnson (Chief Cartographer, Washington Support Office Land Resources Division, Fort Collins
         Technical Center, National Park Service) and Cam Peterson (GIS/Data Analyst, GEOSYS) for clarification on
         area.<br></p>
-    <p>Paul Bernhardt, Matt Killeen, Ciera Morris, and Emerson Williams-Molett</p>
+    <p>--Paul Bernhardt, Matt Killeen, Ciera Morris, and Emerson Williams-Molett</p>
       </div>
 
 
-  <!-- Leaflet JS -->
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+  <!-- Leaflet JS 
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-    crossorigin=""></script>
+    crossorigin=""></script>-->
+
   <!--D3-->
   <script src="https://d3js.org/d3.v5.min.js"></script>
 
+  <!--Plotly-->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   
-
-
   <!-- API key -->
   <script type="text/javascript" src="static/config.js"></script>
+  
   <!-- JS -->
-
+  <script type="text/javascript" src="static/emerson.js"></script>
   <script type="text/javascript" src="static/paul2.js"></script>
 
 </body>
