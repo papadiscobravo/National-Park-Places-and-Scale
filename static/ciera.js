@@ -72,4 +72,7 @@ d3.json("/parkingtransportation").then(function(parkingtransportationData) {
     var parkingtransportationNames = parkingtransportationData[0].name;
 });
 
-
+////EVENT HANDLER////
+// 2. Choose an NPS unit, whether by
+//     clicking on a nearby NPS unit (look for the arrowhead!) or
+//     choosing from a drop-down of 418.

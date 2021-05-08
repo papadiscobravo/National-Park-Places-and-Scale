@@ -31,9 +31,7 @@ var NPSplaceRandomLatLong;
 // });
 
 
-// d3.csv("../resources/natParksFinal.csv").then(function (NPSData) {
 d3.json("/natparks").then(function (NPSData) {
-	console.log(NPSData);
 	// Cast strings to numbers for each record in NPSData
 	// NPSData.forEach(function (data) {
 	// 	data.latitude = +data.latitude;
@@ -266,6 +264,7 @@ d3.json("/natparks").then(function (NPSData) {
 
 	// 1. Define base maps
 	// all the MapBox styles are at https://docs.mapbox.com/api/maps/styles/#mapbox-styles
+	var API_KEY = "pk.eyJ1IjoiY2llcmFubW9ycmlzIiwiYSI6ImNrbnZ2Yzc1NTA1d3kyd3JzeGs5ODJlZ3QifQ.4Kt35f8kgOcQmYe2DIhJsA"
 	var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
 		attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
 		minZoom: minZoomLevel,

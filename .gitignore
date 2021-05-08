@@ -2,3 +2,5 @@ config.js
 config.py
 admin.py
 .DS_Store
+__pycache__/
+
