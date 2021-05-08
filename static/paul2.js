@@ -31,24 +31,26 @@ var NPSplaceRandomLatLong;
 // });
 
 
-d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
+// d3.csv("../resources/natParksFinal.csv").then(function (NPSData) {
+d3.json("/natparks").then(function (NPSData) {
+	console.log(NPSData);
 	// Cast strings to numbers for each record in NPSData
-	NPSData.forEach(function (data) {
-		data.Latitude = +data.Latitude;
-		data.Longitude = +data.Longitude;
-		data.Acres = +data.Acres;
-		data.att_2011 = +data.att_2011;
-		data.att_2012 = +data.att_2012;
-		data.att_2013 = +data.att_2013;
-		data.att_2014 = +data.att_2014;
-		data.att_2015 = +data.att_2015;
-		data.att_2016 = +data.att_2016;
-		data.att_2017 = +data.att_2017;
-		data.att_2018 = +data.att_2018;
-		data.att_2019 = +data.att_2019;
-		data.att_2020 = +data.att_2020;
-		data.att_Average = +data.att_Average;
-	});
+	// NPSData.forEach(function (data) {
+	// 	data.latitude = +data.latitude;
+	// 	datal = +datal;
+	// 	data.Acres = +data.Acres;
+	// 	data.att_2011 = +data.att_2011;
+	// 	data.att_2012 = +data.att_2012;
+	// 	data.att_2013 = +data.att_2013;
+	// 	data.att_2014 = +data.att_2014;
+	// 	data.att_2015 = +data.att_2015;
+	// 	data.att_2016 = +data.att_2016;
+	// 	data.att_2017 = +data.att_2017;
+	// 	data.att_2018 = +data.att_2018;
+	// 	data.att_2019 = +data.att_2019;
+	// 	data.att_2020 = +data.att_2020;
+	// 	data.att_Average = +data.att_Average;
+	// });
 
 	// set a variable that stores how many records there are in this dataset:
 	NPSplaceCount = NPSData.length;
@@ -58,19 +60,20 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 	NPSplaceRandom = Math.floor(Math.random() * NPSplaceCount);
 
 	// retrieve the lat and long from this record and put it into an array:
-	NPSplaceRandomLatLong = [NPSData[NPSplaceRandom].Latitude, NPSData[NPSplaceRandom].Longitude];
+	NPSplaceRandomLatLong = [NPSData[NPSplaceRandom].latitude, NPSData[NPSplaceRandom].longitude];
 	parkID = NPSplaceRandom;
 
-	console.log(`${NPSplaceRandom} ${NPSData[NPSplaceRandom].Code}
-    ${NPSData[NPSplaceRandom].Name}
-    ${Math.round(NPSData[NPSplaceRandom].Acres)} acres
+	console.log(`${NPSplaceRandom} ${NPSData[NPSplaceRandom].code}
+    ${NPSData[NPSplaceRandom].name}
+    ${Math.round(NPSData[NPSplaceRandom].acres)} acres
     ${NPSplaceRandomLatLong} lat long
   `);
 
 	window.onload = function () {
-		document.getElementById('label').innerHTML = NPSData[NPSplaceRandom].Name;
+		document.getElementById('label').innerHTML = NPSData[NPSplaceRandom].name;
 	};
-	console.log(`Made the text '${NPSData[NPSplaceRandom].Name}' available to the label div in index.html`);
+	console.log(`Made the text '${NPSData[NPSplaceRandom].name}' available to the label div in index.html`);
+	console.log(NPSData[NPSplaceRandom].name);
 
 
 	// console.log(`NPSplaceRandomLatLong[0] contains ${NPSplaceRandomLatLong[0]}`);
@@ -235,7 +238,7 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 	// print a statement about scale to the HTML
 	window.onload = function () {
-		document.getElementById('scale').innerHTML = "<b>"+ NPSData[NPSplaceRandom].Name + "</b><br>" + outerCircleDims + scaleText + "<br>" + circleText;
+		document.getElementById('scale').innerHTML = "<b>"+ NPSData[NPSplaceRandom].name + "</b><br>" + outerCircleDims + scaleText + "<br>" + circleText;
 	};
 	console.log("Scale text sent to scale div in HTML.");
 
@@ -320,7 +323,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 	//------- start of history POI loop -------------
 	var POIdataHist = "";
-	d3.csv("resources/historicFinal.csv").then(function (POIdataHist) {
+		d3.json("/historic").then(function (POIdataHist) {
+		// d3.csv("../resources/historicFinal.csv").then(function (POIdataHist) {
 		var POImarkersHist = [];
 		var POIlengthHist = 0;
 	
@@ -371,7 +375,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 		//------- start of amenities POI loop -------------		
 		var POIdataAmenities = "";
-		d3.csv("resources/amenitiesFinal.csv").then(function (POIdata) {
+			// d3.csv("../resources/amenitiesFinal.csv").then(function (POIdata) {
+			d3.json("/amenities").then(function (POIdata) {
 			POImarkers = [];
 			POIlength = 0;
 
@@ -422,7 +427,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 			//------- start of attractions POI loop -------------
 			var POIdataAttractions = "";
-			d3.csv("resources/attractionsFinal.csv").then(function (POIdata) {
+				// d3.csv("../resources/attractionsFinal.csv").then(function (POIdata) {
+				d3.json("/attractions").then(function (POIdata) {
 				POImarkers = [];
 				POIlength = 0;
 	
@@ -473,7 +479,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 			//------- start of boating POI loop -------------
 			var POIdataBoating = "";
-			d3.csv("resources/boatingFinal.csv").then(function (POIdata) {
+				// d3.csv("../resources/boatingFinal.csv").then(function (POIdata) {
+				d3.json("/boating").then(function (POIdata) {
 				POImarkers = [];
 				POIlength = 0;
 
@@ -525,7 +532,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 			//------- start of camping POI loop -------------
 			var POIdataCamping = "";
-			d3.csv("resources/campingFinal.csv").then(function (POIdata) {
+			// d3.csv("../resources/campingFinal.csv").then(function (POIdata) {
+			d3.json("/camping").then(function (POIdata) {
 				// This initializes an array that's going to contain all the Leaflet markers for this layer:
 				POImarkers = [];
 				POIlength = 0;
@@ -577,7 +585,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 			//------- start of emergency POI loop -------------
 			var POIdataEmergency = "";
-			d3.csv("resources/emergencyFinal.csv").then(function (POIdata) {
+			// d3.csv("../resources/emergencyFinal.csv").then(function (POIdata) {
+			d3.json("/emergency").then(function (POIdata) {
 				// This initializes an array that's going to contain all the Leaflet markers for this layer:
 				POImarkers = [];
 				POIlength = 0;
@@ -629,7 +638,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 			//------- start of transportation POI loop -------------
 			var POIdataTransportation = "";
-			d3.csv("resources/parkingTransportationFinal.csv").then(function (POIdata) {
+			// d3.csv("../resources/parkingTransportationFinal.csv").then(function (POIdata) {
+			d3.json("/parkingtransportation").then(function (POIdata) {
 				// This initializes an array that's going to contain all the Leaflet markers for this layer:
 				POImarkers = [];
 				POIlength = 0;
@@ -682,7 +692,8 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 
 			//------- start of sports POI loop -------------
 			var POIdataSports = "";
-			d3.csv("resources/sportsActivitiesFinal.csv").then(function (POIdata) {
+			// d3.csv("../resources/sportsActivitiesFinal.csv").then(function (POIdata) {
+			d3.json("/sportsactivities").then(function (POIdata) {
 				// This initializes an array that's going to contain all the Leaflet markers for this layer:
 				POImarkers = [];
 				POIlength = 0;
@@ -881,14 +892,15 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
 		unitAcres = "";
 		unitVisitorsPerAcre = "";
 
-		unitSearchName = unit.Name.replace(/ /g, '+');
-		unitName = `<a href=http://www.google.com/search?q="${unitSearchName}" target="_blank">${unit.Name}</a>`;
+		unitSearchName = unit.name.replace(/ /g, '+');
+		unitName = `<a href=http://www.google.com/search?q="${unitSearchName}" target="_blank">${unit.name}</a>`;
 
-		unitAcres = `${Math.round((unit.Acres) * 10) / 10} acres`;
+		unitAcres = `${Math.round((unit.acres) * 10) / 10} acres`;
 
-		if (unit.att_Average > 0) {
-			unitVisitors = `${unit.att_Average} recreation visits each year`;
-			unitVisitorsPerAcre = `${Math.round((unit.att_Average / unit.Acres) * 10) / 10} recreation visits per acre each year`;
+		// console.log(unit);
+		if (unit.att_average > 0) {
+			unitVisitors = `${unit.att_average} recreation visits each year`;
+			unitVisitorsPerAcre = `${Math.round((unit.att_average / unit.acres) * 10) / 10} recreation visits per acre each year`;
 		}
 		else {
 			unitVisitors = "attendance data not available";
@@ -897,17 +909,17 @@ d3.csv("resources/natParksFinal.csv").then(function (NPSData) {
         
         // https://leafletjs.com/examples/custom-icons/
         var NPSunitIcon = L.icon({
-            iconUrl: "resources/NPS-arrowhead-silhouette.png",
+            iconUrl: "../resources/NPS-arrowhead-silhouette.png",
             iconSize: [38, 95],
             iconAnchor: [22, 94],
 			popupAnchor: [-3, -76],
-			shadowUrl: "resources/NPS-arrowhead-shadow.png",
+			shadowUrl: "../resources/NPS-arrowhead-shadow.png",
 			shadowSize: [68, 95],
 			shadowAnchor: [22, 94]
         });
 
 
-		L.marker([unit.Latitude, unit.Longitude], title = unit.Name, {icon: NPSunitIcon})
+		L.marker([unit.latitude, unit.longitude], title = unit.name, {icon: NPSunitIcon})
 			.bindPopup("<h4>" + unitName + "</h4>" + "<p>" + unitVisitors + "<br>" + unitAcres + "<br>" + unitVisitorsPerAcre + "</p>")
 			.addTo(myMap);
 		// console.log(`marked ${i+1}`);

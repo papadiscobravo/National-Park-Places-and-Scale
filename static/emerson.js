@@ -1,7 +1,8 @@
 console.log("emerson.js loaded");
 
 function buildCharts(parkID) {
-  d3.csv("resources/natParksFinal.csv").then((data) => {
+  // d3.csv("../resources/natParksFinal.csv").then((data) => {
+  d3.json("/natparks").then((data) => {
     parkInfo = data[parkID]
     console.log(`parkInfo for parkID ${parkID} contains`);
     console.log(parkInfo);
@@ -22,7 +23,7 @@ function buildCharts(parkID) {
     }];
 
     var layout1 = {
-      title: `${parkInfo.Name}<br>Recreation Visits per Year`,
+      title: `${parkInfo.name}<br>Recreation Visits per Year`,
       yaxis: {
         title: "Recreation Visits"
       },
@@ -70,7 +71,8 @@ function optionChanged(parkID) {
 
 function initDashboard() {
   var dropdown = d3.select("#selDataset")
-  d3.csv("resources/natParksFinal.csv").then((data) => {
+  // d3.csv("../resources/natParksFinal.csv").then((data) => {
+  d3.json("/natparks").then((data) => {
     // var parksInfo = data.names;
     data.forEach((parkInfo) => {
       dropdown.append("option").text(parkInfo.name).property("value", parkInfo[""])

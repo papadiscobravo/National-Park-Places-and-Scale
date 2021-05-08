@@ -1,10 +1,10 @@
-/* set margin and padding on body */
+/*set margin and padding on body*/
 body {
   padding: 10;
   margin: 10;
 }
 
-/* set map, body, and html to a percent of the screen size */
+/* set map, body, and html to a percent of the screen size*/
 #map,
 body,
 html {
