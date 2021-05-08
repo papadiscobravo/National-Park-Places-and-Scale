@@ -12,24 +12,33 @@
 
   <!-- Our CSS -->
   <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  
+
+  <!-- Load d3.js -->
+<!-- <script src="https://d3js.org/d3.v4.js"></script> -->
 </head>
 
 <body>
 
   <style>
     #menu {
-    position: absolute;
-    background: #efefef;
-    padding: 10px;
-    font-family: 'Open Sans', sans-serif;
+      position: absolute;
+      background: #efefef;
+      padding: 10px;
+      font-family: 'Open Sans', sans-serif;
     }
   </style>
 
   <!-- the div where the website title goes-->
-  <div id="title"><h1>National Park Explorer</h1></div>
+  <div id="title">
+    <h1>National Park Explorer</h1>
+  </div>
 
   <!-- the div where the name of the place the map starts on goes-->
-  <div id="label"><h2></h2></div>
+  <div id="label">
+    <h2></h2>
+  </div>
 
   <!-- the div where the map goes-->
   <div id="map"></div>
@@ -50,27 +59,48 @@
   </div>
 
   <!-- the div where how many Delawares across goes-->
-  <div id="scale"><h3></h3></div>
+  <div id="scale">
+    <h3></h3>
+  </div>
 
   <!-- the div where how many Delawares across goes-->
-  <div id="table"><h3></h3></div>
-
+  <div id="table">
+    <h3></h3>
+  </div>
+  <select id="selDataset" onchange="optionChanged(this.value)">
+  </select>
+  
+  <div id="bar"></div>
+  <div id="scatter"></div>
+  <div id="gauge"></div>
+  <!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
   <!-- the div where information about sources goes-->
   <div id="footnote">
-<h4>notes</h4>
-<p><i>Visitors per year</i> is the mean of 2011-2020 annual attendance figures as found in [source].</p>
-<p><i>Area</i> began as a value from [source] autopopulated by ESRI software based on <a href="https://en.wikipedia.org/wiki/Web_Mercator_projection" target="_blank">WGS 1984 Web</a> <a href="https://imgs.xkcd.com/comics/mercator_projection.png" target="_blank">Mercator</a>.<br>
-<p>Thanks to Roger Johnson (Chief Cartographer, Washington Support Office Land Resources Division, Fort Collins Technical Center, National Park Service) and Cam Peterson (GIS/Data Analyst, GEOSYS) for clarification on area.<br></p>
-<p>Special thanks to Matthew Rowbotham of the <a href="https://northcountrytrail.org/" target="_blank">North Country Trail Association</a> for converting these to acres in <a href="https://en.wikipedia.org/wiki/Albers_projection" target="_blank">North America Albers Equal Area Conic</a> projection. A spot-check of results show 555.200203 acres for <a href="https://www.nps.gov/muwo/index.htm" target="_blank"></a>Muir Woods National Monument</a> by these calculations, which <a href="https://en.wikipedia.org/wiki/Muir_Woods_National_Monument" target="_blank"></a>Wikipedia</a> lists as 554 acres. <i>No real estate transactions should be based on these figures.</i></p>
+    <h4>notes</h4>
+    <p><i>Visitors per year</i> is the mean of 2011-2020 annual attendance figures as found in [source].</p>
+    <p><i>Area</i> began as a value from [source] autopopulated by ESRI software based on <a
+        href="https://en.wikipedia.org/wiki/Web_Mercator_projection" target="_blank">WGS 1984 Web</a> <a
+        href="https://imgs.xkcd.com/comics/mercator_projection.png" target="_blank">Mercator</a>.<br>
+    <p>Thanks to Roger Johnson (Chief Cartographer, Washington Support Office Land Resources Division, Fort Collins
+      Technical Center, National Park Service) and Cam Peterson (GIS/Data Analyst, GEOSYS) for clarification on
+      area.<br></p>
+    <p>Special thanks to Matthew Rowbotham of the <a href="https://northcountrytrail.org/" target="_blank">North Country
+        Trail Association</a> for converting these to acres in <a href="https://en.wikipedia.org/wiki/Albers_projection"
+        target="_blank">North America Albers Equal Area Conic</a> projection. A spot-check of results show 555.200203
+      acres for <a href="https://www.nps.gov/muwo/index.htm" target="_blank"></a>Muir Woods National Monument</a> by
+      these calculations, which <a href="https://en.wikipedia.org/wiki/Muir_Woods_National_Monument"
+        target="_blank"></a>Wikipedia</a> lists as 554 acres. <i>No real estate transactions should be based on these
+        figures.</i></p>
   </div>
-  
+
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
   <!--D3-->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
 
   <!-- Benji's magic -->
   <!-- <script type="text/javascript" src="static/d3Caching.js"></script> -->
@@ -84,6 +114,9 @@
 
   <!--<script type="text/javascript" src="emerson.js"></script>-->
   <script type="text/javascript" src="static/paul.js"></script>
+  <script type="text/javascript" src="static/js/Emerson.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
   <!-- <script type="text/javascript" src="static/app.js"></script> -->
 
 
