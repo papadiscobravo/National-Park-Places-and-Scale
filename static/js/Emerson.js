@@ -59,7 +59,7 @@ function buildCharts(parkID) {
 function drawGaugeChart(att_2020) {
   console.log(att_2020);
   // Divide 180 degree half circle into 9 parts
-  var intervals = parseFloat(att_2020 * 20);
+  var intervals = parseFloat(att_2020 * 200);
 
   // Define gauge chart values and ranges
   var gaugeData = [
