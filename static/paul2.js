@@ -1,4 +1,4 @@
-console.log("pauls.js loaded");
+console.log("paul2.js loaded");
 
 // IA IMPORT SOME DATA
 // import data about the 418 units ('parks') in the National Park System.
@@ -265,15 +265,7 @@ d3.json("/natparks").then(function (NPSData) {
 	// 1. Define base maps
 	// all the MapBox styles are at https://docs.mapbox.com/api/maps/styles/#mapbox-styles
 	var API_KEY = "pk.eyJ1IjoiY2llcmFubW9ycmlzIiwiYSI6ImNrbnZ2Yzc1NTA1d3kyd3JzeGs5ODJlZ3QifQ.4Kt35f8kgOcQmYe2DIhJsA"
-	var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-		attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-		minZoom: minZoomLevel,
-		zoom: zoom,
-		maxZoom: maxZoomLevel,
-		id: "satellite-v9",
-		accessToken: API_KEY
-	});
-
+	
 	var dark = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
 		attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
 		minZoom: minZoomLevel,
@@ -283,7 +275,16 @@ d3.json("/natparks").then(function (NPSData) {
 		accessToken: API_KEY
 	});
 
-	var streets = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+		attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+		minZoom: minZoomLevel,
+		zoom: zoom,
+		maxZoom: maxZoomLevel,
+		id: "satellite-v9",
+		accessToken: API_KEY
+	});
+
+    var streets = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
 		attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
 		minZoom: minZoomLevel,
 		zoom: zoom,
@@ -292,13 +293,13 @@ d3.json("/natparks").then(function (NPSData) {
 		accessToken: API_KEY
 	});
 
-	
 		// 5. This lists base maps for Layers Control:    
 		var baseMaps = {
-			"satellite": satellite,
-			"grayed out": dark,
-			"streets": streets
+			"gray background": dark,
+			"satellite view": satellite,
+			"street map": streets
 		};
+
 		console.log("Here's what's in baseMaps:");
 		console.log(baseMaps);
 
@@ -797,12 +798,21 @@ d3.json("/natparks").then(function (NPSData) {
 	}).addTo(myMap);
 
 
-	// œuf de Pâques
+	// œufs de Pâques
 	var axeHistorique = [
 		[48.890171, 2.243282],
 		[48.861613, 2.333366]
 	];
 	L.polyline(axeHistorique, {
+		color: "lightblue",
+		weight: "2"
+	}).addTo(myMap);
+
+	var henge = [
+		[51.179127, -1.825649],
+		[51.178765, -1.826352]
+	];
+	L.polyline(henge, {
 		color: "lightblue",
 		weight: "2"
 	}).addTo(myMap);
@@ -894,12 +904,17 @@ d3.json("/natparks").then(function (NPSData) {
 		unitSearchName = unit.name.replace(/ /g, '+');
 		unitName = `<a href=http://www.google.com/search?q="${unitSearchName}" target="_blank">${unit.name}</a>`;
 
-		unitAcres = `${Math.round((unit.acres) * 10) / 10} acres`;
+		if (unit.acres < 10) {
+			unitAcres = `${Math.round((unit.acres) * 10) / 10} acres`;
+		}
+		else {
+			unitAcres = `${Math.round(unit.acres)} acres`;
+		};
 
 		// console.log(unit);
 		if (unit.att_average > 0) {
 			unitVisitors = `${unit.att_average} recreation visits each year`;
-			unitVisitorsPerAcre = `${Math.round((unit.att_average / unit.acres) * 10) / 10} recreation visits per acre each year`;
+			unitVisitorsPerAcre = `${Math.round(unit.att_average / unit.acres)} recreation visits per acre each year`;
 		}
 		else {
 			unitVisitors = "attendance data not available";
