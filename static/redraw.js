@@ -4,12 +4,9 @@ console.log("redraw.js loaded");
 //     alert(e.latlng);
 // };
 
-// function marker.on('click', function(ev){
-//     var latlng = map.mouseEventToLatLng(ev.originalEvent);
-//     console.log(latlng.lat + ', ' + latlng.lng);
-//   });
+function on(PopupEvent) {
+    alert(`clicked ${latlng.lat}, ${latlng.long}`);
+    console.log(`clicked ${latlng.lat}, ${latlng.long}`);
+};
 
-function onClick(e) {
-    alert(this.getLatLng());
-    console.log(this.getLatLng());
-}
+console.log("redraw.js finished");

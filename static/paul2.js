@@ -355,8 +355,13 @@ d3.json("/natparks").then(function (NPSData) {
 			POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
 
 			// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
-			POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
-				.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+			POImarker = L.marker([POI.latitude, POI.longitude], {
+				opacity: 1,
+				icon: L.icon({
+					iconUrl: "./static/markers/marker-history.png",
+					iconSize: [25, 40]
+				})
+			}).bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
 			// console.log(`bound ${i+1} to marker, placed in layer`);
 
 			// This appends POImarker to POImarkers:
@@ -407,8 +412,15 @@ d3.json("/natparks").then(function (NPSData) {
 				POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
 
 				// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
-				POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
-					.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+
+				POImarker = L.marker([POI.latitude, POI.longitude], {
+					opacity: 1,
+					icon: L.icon({
+						iconUrl: "./static/markers/marker-amenities.png",
+						iconSize: [25, 40]
+					})
+				}).bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+	
 				// console.log(`bound ${i+1} to marker, placed in layer`);
 
 				// This appends POImarker to POImarkers:
@@ -459,10 +471,15 @@ d3.json("/natparks").then(function (NPSData) {
 					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
 
 					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
-					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
-						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
-					// console.log(`bound ${i+1} to marker, placed in layer`);
 
+					POImarker = L.marker([POI.latitude, POI.longitude], {
+						opacity: 1,
+						icon: L.icon({
+							iconUrl: "./static/markers/marker-attractions.png",
+							iconSize: [25, 40]
+						})
+					}).bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+	
 					// This appends POImarker to POImarkers:
 					POImarkers.push(POImarker);
 				};
@@ -511,9 +528,14 @@ d3.json("/natparks").then(function (NPSData) {
 					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
 
 					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
-					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
-						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
-					// console.log(`bound ${i+1} to marker, placed in layer`);
+
+					POImarker = L.marker([POI.latitude, POI.longitude], {
+						opacity: 1,
+						icon: L.icon({
+							iconUrl: "./static/markers/marker-boating.png",
+							iconSize: [25, 40]
+						})
+					}).bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");	
 
 					// This appends POImarker to POImarkers:
 					POImarkers.push(POImarker);
@@ -565,10 +587,15 @@ d3.json("/natparks").then(function (NPSData) {
 					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
 
 					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
-					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
-						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
-					// console.log(`bound ${i+1} to marker, placed in layer`);
 
+					POImarker = L.marker([POI.latitude, POI.longitude], {
+						opacity: 1,
+						icon: L.icon({
+							iconUrl: "./static/markers/marker-camping.png",
+							iconSize: [25, 40]
+						})
+					}).bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+	
 					// This appends POImarker to POImarkers:
 					POImarkers.push(POImarker);
 				};
@@ -618,9 +645,14 @@ d3.json("/natparks").then(function (NPSData) {
 					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
 
 					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
-					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
-						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
-					// console.log(`bound ${i+1} to marker, placed in layer`);
+
+					POImarker = L.marker([POI.latitude, POI.longitude], {
+						opacity: 1,
+						icon: L.icon({
+							iconUrl: "./static/markers/marker-emergency.png",
+							iconSize: [25, 40]
+						})
+					}).bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
 
 					// This appends POImarker to POImarkers:
 					POImarkers.push(POImarker);
@@ -671,9 +703,15 @@ d3.json("/natparks").then(function (NPSData) {
 					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
 
 					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
-					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
-						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
-					// console.log(`bound ${i+1} to marker, placed in layer`);
+
+					POImarker = L.marker([POI.latitude, POI.longitude], {
+						opacity: 1,
+						icon: L.icon({
+							iconUrl: "./static/markers/marker-transportation.png",
+							iconSize: [25, 40]
+						})
+					}).bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+	
 
 					// This appends POImarker to POImarkers:
 					POImarkers.push(POImarker);
@@ -725,9 +763,15 @@ d3.json("/natparks").then(function (NPSData) {
 					POIname = `<a href=http://www.google.com/search?q="${POIsearchName}" target="_blank">${POI.name}</a>`;
 
 					// This concatenates POIname with lat, long, and type, and turns it into a Leaflet marker with a popup bound to it:
-					POImarker = L.marker([POI.latitude, POI.longitude], title = POI.name)
-						.bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
-					// console.log(`bound ${i+1} to marker, placed in layer`);
+
+					POImarker = L.marker([POI.latitude, POI.longitude], {
+						opacity: 1,
+						icon: L.icon({
+							iconUrl: "./static/markers/marker-sports.png",
+							iconSize: [25, 40]
+						})
+					}).bindPopup("<h3>" + POIname + "</h3>" + "<h4>" + POItype + "<br>");
+	
 
 					// This appends POImarker to POImarkers:
 					POImarkers.push(POImarker);
@@ -799,6 +843,16 @@ d3.json("/natparks").then(function (NPSData) {
 
 
 	// œufs de Pâques
+	var stonehenge = [
+		[51.179127, -1.825649],
+		[51.178765, -1.826352]
+	];
+	L.polyline(stonehenge, {
+		color: "lightblue",
+		weight: "2"
+	}).addTo(myMap);
+
+
 	var axeHistorique = [
 		[48.890171, 2.243282],
 		[48.861613, 2.333366]
@@ -808,11 +862,12 @@ d3.json("/natparks").then(function (NPSData) {
 		weight: "2"
 	}).addTo(myMap);
 
-	var henge = [
-		[51.179127, -1.825649],
-		[51.178765, -1.826352]
+
+	var manhattanhenge = [
+		[40.782015, -73.975599],
+		[40.785699, -73.984356]
 	];
-	L.polyline(henge, {
+	L.polyline(manhattanhenge, {
 		color: "lightblue",
 		weight: "2"
 	}).addTo(myMap);
@@ -921,19 +976,22 @@ d3.json("/natparks").then(function (NPSData) {
 			unitVisitorsPerAcre = "";
         };
         
-        // https://leafletjs.com/examples/custom-icons/
+		// https://leafletjs.com/examples/custom-icons/
+		// https://handsondataviz.org/leaflet-maps-with-csv.html
         var NPSunitIcon = L.icon({
-            iconUrl: "../resources/NPS-arrowhead-silhouette.png",
-            iconSize: [38, 95],
-            iconAnchor: [22, 94],
-			popupAnchor: [-3, -76],
-			shadowUrl: "../resources/NPS-arrowhead-shadow.png",
-			shadowSize: [68, 95],
-			shadowAnchor: [22, 94]
+            iconUrl: "./static/markers/NPS-arrowhead-2tone.png",
+            iconSize: [38, 40],
+            iconAnchor: [20, 38],
+			popupAnchor: [0, -40],
+			shadowUrl: "./static/markers/NPS-arrowhead-shadow.png",
+			shadowSize: [45, 40],
+			shadowAnchor: [20, 38]
         });
 
-
-		L.marker([unit.latitude, unit.longitude], title = unit.name, {icon: NPSunitIcon})
+		L.marker([unit.latitude, unit.longitude], {
+			opacity: 1,
+			icon: NPSunitIcon
+		})
 			.bindPopup("<h4>" + unitName + "</h4>" + "<p>" + unitVisitors + "<br>" + unitAcres + "<br>" + unitVisitorsPerAcre + "</p>")
 			.addTo(myMap);
 		// console.log(`marked ${i+1}`);
