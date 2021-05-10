@@ -1,7 +1,12 @@
 # Discover America's Story: National Parks Points of Interest, Relative Scale, and Average Attendance
 
-### Project Contributors
-[Paul Bernhardt](https://github.com/papadiscobravo), [Matt Killeen](https://github.com/matthewkilleen0830), [Ciera Morris](https://github.com/cieranmorris), [Emerson Williams-Molett](https://github.com/emersonmolett)
+![NPS](resources/NPS-stock-image.png)
+
+### Team Members
+* [Paul Bernhardt](https://github.com/papadiscobravo) 
+* [Matt Killeen](https://github.com/matthewkilleen0830) 
+* [Ciera Morris](https://github.com/cieranmorris) 
+* [Emerson Williams-Molett](https://github.com/emersonmolett)
 
 
 ### Project Overview
@@ -27,6 +32,10 @@ The data analyzed in this project was compiled from the following sources:
 1. Open a new terminal in the repository and source activate the Python environment.
 
 1. In the same terminal, launch a Jupyter Notebook. Open the file `natParksETL.ipynb` and click `Restart and Clear Output`. Do not run the notebook at this time.
+
+1. Inside your local repo, update the file called "TAconfig.py with your PgAdmin4 password and save the file. 
+
+1. Inside your local repo, update the .gitignore file by adding "TAconfig.py" on the first line and save the file. 
 
 1. Launch pgAdmin4 to access your local postgreSQL Database. Generate a new database titled `natParks`.
 
