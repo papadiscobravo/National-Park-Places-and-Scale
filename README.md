@@ -1,22 +1,26 @@
-## Places in the U.S. National Park System: &nbsp;Their points of interest, relative scale, and attendance
+# Discover America's Story: National Parks Points of Interest, Relative Scale, and Average Attendance
 
-### Project2: &nbsp;Data Analytics and Visualization Boot Camp, University of Minnesota
-
-
-#### Project Contributors
+### Project Contributors
 [Paul Bernhardt](https://github.com/papadiscobravo), [Matt Killeen](https://github.com/matthewkilleen0830), [Ciera Morris](https://github.com/cieranmorris), [Emerson Williams-Molett](https://github.com/emersonmolett)
 
 
-#### Project Overview
+### Project Overview
 This one-page dashboard shows a map of places in the U.S. National Park System.
 &nbsp;When site visitors click on a map marker, a pop-up appears with facts about that place, a graph is drawn of that park's 2011-2020 attendance, and concentric circles appear around the marker. &nbsp;Clicking on a different place and plotting the same diameter circles around a new place while staying at the same zoom level allows visitors to compare the scale of different places.
 
-#### Data Sources
+### Data Sources
 The data analyzed in this project was compiled from the following sources:
 
+* Units of the National Park Service system were gathered from the [GitHub repository](https://github.com/learn-chef/national-parks-java/blob/master/national-parks.json) of Franklin Webber.
 
-#### Instructions
-1. On GitHub, navigate to the project repository page titled `papadiscobravo/National-Park-Places-and-Scale`, or click on this [link]("https://github.com/papadiscobravo/National-Park-Places-and-Scale").
+* Annual attendance records for all national parks were taken from the [National Park Service statstical report site](https://irma.nps.gov/STATS/SSRSReports/National%20Reports/Annual%20Visitation%20By%20Park%20(1979%20-%20Last%20Calendar%20Year)).
+
+* Points of interest within each national parks was derived from the National Park Service's [ArcGIS geocoordinate system](https://public-nps.opendata.arcgis.com/datasets/nps-points-of-interest-pois-geographic-coordinate-system-1?geometry=98.606%2C-21.130%2C-123.582%2C70.669).
+
+* Land mass and area for each NPS unit came from the National Park Service's [nps boundary](https://public-nps.opendata.arcgis.com/datasets/nps-boundary-1/data?geometry=-81.404%2C-20.478%2C56.408%2C70.899) ArcGIS dataset.
+
+### Database Recreation and Launch
+1. On GitHub, navigate to the project repository page titled `papadiscobravo/National-Park-Places-and-Scale`, or click on this [link](https://github.com/papadiscobravo/National-Park-Places-and-Scale).
 
 1. Clone the repository to your local machine.
 
@@ -38,22 +42,12 @@ The data analyzed in this project was compiled from the following sources:
 
 1. Copy and paste the flask server link into your Chrome browser to launch to webpage.
 
+1. The landing page titled `National Park Explorer` will load displaying all interactive charts. Note that this website contains the following:
+* A satellite view of the United States with NPS arrowheads indicating all the National Parks 
+* A horizontal bar graph showing the number of annual visits for a selected park spanning from 2011 - 2020 
+* A gauge chart indicating the average number of annual visits for a selected park 
+* A stacked scatter plot comparing acreage of each national park broken down by latitude and longitude.
 
+1. In the upper righthand corner of the navigation bar, there is a hyperlink titled `Notes`. Navigate to this webpage and take not of the information regarding data sources and acknowledgments for project assistance. The `Home` hyperlink in the upper lefthand corner will take you back to the landing page. 
 
-#### major things left to do
-1. Finish ETL. -Matt.
-
-1. Import data from SQLite via Flask: &nbsp;NPSplacesAndAttendance table and POIdata table. -Ciera
-
-*** User needs to input their own username and password used in their local PgAdmin4 SQL Database and for their Jupyter Notebook in a config.py file. The user also needs to run the `table_schemata.sql` into their own SQL Database in order to generate the 10 tables.
-
-1. Plot systemwide map: &nbsp;pick a random place, draw the map centered on that place, bind place markers of 423 units (parks) to the map, draw concentric circles aroud the place the map is centered on, bind point-of-interest markers to the map. -Paul
-
-1. Plot per-park attendance that updates for each unit (park) clicked on. -Emerson
- 
-1. Plot two scatterplots of system-wide data that remain unchanged onscreen: &nbsp;lat vs area and long vs area.  -Emerson
-
-1. Make sure HTML and CSS are making the page look really sharp. -we'll circle back to this.
-
-1. Benji advises: &nbsp;Don't put logic on the outermost level of any of these files.
-&nbsp;Everything we do, put it into a function.
+1. Navigate to any National Park of your choice and learn about all the points of interest, the relative scale of interests within the park, and plan what time of year to visit based on annual attendance!
